@@ -274,6 +274,7 @@ section { padding: var(--space-xl) 0; }
 
 /* ---------- About / Bio ---------- */
 .bio-layout { display: grid; grid-template-columns: 380px 1fr; gap: var(--space-lg); align-items: start; }
+.bio-layout-narrow { grid-template-columns: 320px 1fr; }
 .bio-photo img { width: 100%; border-radius: var(--radius); }
 .credential-list { margin-top: var(--space-md); border-top: 1px solid var(--color-line); padding-top: var(--space-md); }
 .credential-list li { display: flex; justify-content: space-between; padding: 0.6rem 0; border-bottom: 1px solid var(--color-line); font-size: 0.92rem; }
@@ -395,11 +396,15 @@ textarea { resize: vertical; min-height: 140px; }
             align-items: flex-start;
             padding: var(--space-md);
             gap: var(--space-md);
-            transform: translateX(100%);
-            transition: transform var(--transition);
+            /* clip instead of translate so the hidden menu doesn't widen the page */
+            clip-path: inset(0 0 0 100%);
+            visibility: hidden;
+            transition: clip-path var(--transition), visibility var(--transition);
             overflow-y: auto;
      }
-     .nav-links.is-open { transform: translateX(0); }
+     .nav-links.is-open { clip-path: inset(0); visibility: visible; }
+     /* backdrop-filter makes the header the containing block for the fixed menu, collapsing it; drop it on mobile */
+     .site-header { backdrop-filter: none; }
      .menu-toggle { display: flex; }
      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
      .testimonial-grid { grid-template-columns: 1fr; }
