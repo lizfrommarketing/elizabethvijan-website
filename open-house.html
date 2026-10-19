@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Open House">
+<title>Open House Sign-In | Elizabeth Vijan</title>
+<link rel="icon" href="assets/images/exp-realty-logo.png">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  /* Open house sign-in (kiosk) — page-only styles */
+  body.oh { background: #000; color: #fff; min-height: 100vh; }
+  .oh-bg { position: fixed; inset: 0; z-index: 0; }
+  .oh-bg img { width: 100%; height: 100%; object-fit: cover; }
+  .oh-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.72), rgba(0,0,0,0.88)); }
+  .oh-wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: clamp(1.25rem, 4vw, 3rem) clamp(1rem, 4vw, 2rem) 3rem; }
+  .oh-brand { display: flex; justify-content: center; margin-bottom: 1.25rem; }
+  .oh-brand img { height: 52px; width: auto; }
+  .oh-card { background: #fff; color: #000; border-top: 4px solid var(--color-gold); padding: clamp(1.25rem, 4vw, 2.5rem); border-radius: var(--radius); box-shadow: 0 20px 60px rgba(0,0,0,0.45); }
+  .oh-card h1 { font-family: var(--font-serif); font-size: clamp(1.6rem, 5vw, 2.4rem); line-height: 1.15; margin: 0 0 0.35rem; text-align: center; }
+  .oh-eyebrow { display: block; text-align: center; color: var(--color-gold-dark); font-size: 0.8rem; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .oh-property { text-align: center; color: #444; margin: 0 0 1.5rem; font-size: 1.05rem; overflow-wrap: anywhere; }
+  .oh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.1rem; }
+  .oh-grid .full { grid-column: 1 / -1; }
+  .oh-field label, .oh-legend { display: block; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .oh-field .opt { font-weight: 400; text-transform: none; letter-spacing: 0; color: #777; }
+  .oh-field input[type=text], .oh-field input[type=email], .oh-field input[type=tel], .oh-field select, .oh-field textarea {
+    width: 100%; min-height: 56px; font: inherit; font-size: 1.15rem; padding: 0.8rem 0.9rem; border: 1.5px solid #cfc7ae; border-radius: var(--radius); background: #fff; color: #000; -webkit-appearance: none; appearance: none; }
+  .oh-field select { background-image: linear-gradient(45deg, transparent 50%, #8c7645 50%), linear-gradient(135deg, #8c7645 50%, transparent 50%); background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 2.5rem; }
+  .oh-field textarea { min-height: 96px; resize: vertical; }
+  .oh-field input:focus, .oh-field select:focus, .oh-field textarea:focus { outline: none; border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(177,154,85,0.3); }
+  .oh-choice { display: flex; gap: 0.75rem; }
+  .oh-choice label { flex: 1; position: relative; margin: 0; }
+  .oh-choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .oh-choice span { display: flex; align-items: center; justify-content: center; min-height: 56px; border: 1.5px solid #cfc7ae; border-radius: var(--radius); font-size: 1.1rem; font-weight: 500; cursor: pointer; user-select: none; }
+  .oh-choice input:checked + span { background: #000; color: #fff; border-color: #000; }
+  .oh-choice input:focus-visible + span { box-shadow: 0 0 0 3px rgba(177,154,85,0.45); }
+  .oh-consent { text-transform: none; letter-spacing: 0; font-weight: 400; display: flex; gap: 0.8rem; align-items: flex-start; font-size: 0.95rem; line-height: 1.45; color: #333; }
+  .oh-consent input { width: 28px; height: 28px; flex: 0 0 28px; margin: 0.1rem 0 0; accent-color: #000; }
+  .oh-submit { width: 100%; min-height: 64px; margin-top: 0.5rem; font-size: 1.05rem; letter-spacing: 0.18em; text-transform: uppercase; background: #000; color: #fff; border: 2px solid #000; border-radius: var(--radius); cursor: pointer; font-family: var(--font-sans); font-weight: 600; }
+  .oh-submit:hover, .oh-submit:focus-visible { background: var(--color-gold-dark); border-color: var(--color-gold-dark); }
+  .oh-submit[disabled] { opacity: 0.6; cursor: wait; }
+  .oh-error { color: #a12a1b; font-size: 0.95rem; min-height: 1.2em; margin: 0.6rem 0 0; text-align: center; }
+  .oh-hp { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; overflow: hidden; }
+  .oh-thanks { text-align: center; padding: 2.5rem 0.5rem; }
+  .oh-thanks h2 { font-family: var(--font-serif); font-size: clamp(1.8rem, 6vw, 2.6rem); margin: 0 0 0.75rem; }
+  .oh-thanks p { font-size: 1.15rem; color: #333; margin: 0 0 0.5rem; }
+  .oh-thanks .oh-count { color: #888; font-size: 0.95rem; margin-top: 1.25rem; }
+  .oh-check { width: 72px; height: 72px; margin: 0 auto 1rem; border-radius: 50%; background: #000; color: var(--color-gold); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; }
+  .oh-foot { text-align: center; color: rgba(255,255,255,0.75); font-size: 0.85rem; margin-top: 1.25rem; line-height: 1.6; }
+  .oh-foot a { color: #fff; }
+  [hidden] { display: none !important; }
+  @media (max-width: 560px) { .oh-grid { grid-template-columns: 1fr; } .oh-brand img { height: 42px; } }
+</style>
+</head>
+<body class="oh">
+<div class="oh-bg" aria-hidden="true"><img src="assets/images/photos/luxury-home-pool-dusk-1200.webp" srcset="assets/images/photos/luxury-home-pool-dusk-640.webp 640w, assets/images/photos/luxury-home-pool-dusk-1200.webp 1200w, assets/images/photos/luxury-home-pool-dusk-1920.webp 1920w" sizes="100vw" alt="" width="1200" height="798" decoding="async"></div>
+
+<main class="oh-wrap">
+  <div class="oh-brand"><img src="assets/images/tackett-logo-white.png" alt="Tackett Team, powered by eXp Realty"></div>
+
+  <div class="oh-card">
+    <section id="oh-form-view">
+      <span class="oh-eyebrow">Welcome</span>
+      <h1>Open House Sign-In</h1>
+      <p class="oh-property" id="oh-property-line">Thanks for stopping by. Please sign in below.</p>
+
+      <form id="oh-form" novalidate>
+        <div class="oh-grid">
+          <div class="oh-field">
+            <label for="first_name">First name</label>
+            <input type="text" id="first_name" name="first_name" autocomplete="given-name" autocapitalize="words" required>
+          </div>
+          <div class="oh-field">
+            <label for="last_name">Last name</label>
+            <input type="text" id="last_name" name="last_name" autocomplete="family-name" autocapitalize="words" required>
+          </div>
+          <div class="oh-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required>
+          </div>
+          <div class="oh-field">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" required>
+          </div>
+          <div class="oh-field full">
+            <label for="property">Property address</label>
+            <input type="text" id="property" name="property" autocomplete="off" required>
+          </div>
+          <fieldset class="oh-field full" style="border:0;padding:0;margin:0;">
+            <legend class="oh-legend">Are you working with an agent?</legend>
+            <div class="oh-choice">
+              <label><input type="radio" name="has_agent" value="Yes" required><span>Yes</span></label>
+              <label><input type="radio" name="has_agent" value="No"><span>No</span></label>
+            </div>
+          </fieldset>
+          <div class="oh-field full">
+            <label for="timeline">When are you hoping to buy?</label>
+            <select id="timeline" name="timeline" required>
+              <option value="">Select one</option>
+              <option>Now / 0–3 months</option>
+              <option>3–6 months</option>
+              <option>6–12 months</option>
+              <option>12+ months</option>
+              <option>Just looking</option>
+              <option>I'm a neighbor</option>
+            </select>
+          </div>
+          <div class="oh-field full">
+            <label for="notes">Notes <span class="opt">(optional)</span></label>
+            <textarea id="notes" name="notes" rows="3" placeholder="Anything you'd like Elizabeth to know?"></textarea>
+          </div>
+          <div class="oh-hp" aria-hidden="true">
+            <label for="oh_website">Website</label>
+            <input type="text" id="oh_website" name="oh_website" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="full">
+            <label class="oh-consent">
+              <input type="checkbox" id="consent" name="consent" value="Yes" required>
+              <span>I agree that Elizabeth Vijan (Tackett Team, eXp Realty) may contact me by phone, text or email about this home and other real estate services. Message and data rates may apply. Reply STOP to opt out of texts at any time.</span>
+            </label>
+          </div>
+        </div>
+        <button type="submit" class="oh-submit" id="oh-submit">Sign In</button>
+        <p class="oh-error" id="oh-error" role="alert"></p>
+      </form>
+    </section>
+
+    <section id="oh-thanks-view" class="oh-thanks" hidden aria-live="polite">
+      <div class="oh-check" aria-hidden="true">&#10003;</div>
+      <h2 id="oh-thanks-title">Thank you!</h2>
+      <p>Enjoy the tour. Elizabeth will follow up with any details you need.</p>
+      <p class="oh-count" id="oh-count"></p>
+    </section>
+  </div>
+
+  <p class="oh-foot">Elizabeth Vijan &middot; Tackett Team, eXp Realty &middot; <a href="tel:16028857752">602-885-7752</a><br>Equal Housing Opportunity</p>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  // ---- Configuration -------------------------------------------------------
+  // Web3Forms access key for elizabeth.vijan3@followupboss.me (public by design).
+  // Leave empty until activated; sign-ins are then saved on this device and sent
+  // automatically once a key is added and the page is reloaded.
+  var WEB3FORMS_ACCESS_KEY = '';
+  var ENDPOINT = 'https://api.web3forms.com/submit';
+  var LEAD_SOURCE = 'Open House';
+  var RESET_SECONDS = 6;
+  var QUEUE_KEY = 'ev_open_house_queue_v1';
+
+  var form = document.getElementById('oh-form');
+  var formView = document.getElementById('oh-form-view');
+  var thanksView = document.getElementById('oh-thanks-view');
+  var errorEl = document.getElementById('oh-error');
+  var submitBtn = document.getElementById('oh-submit');
+  var propInput = document.getElementById('property');
+  var countEl = document.getElementById('oh-count');
+  var titleEl = document.getElementById('oh-thanks-title');
+
+  // ---- ?property= prefill (per-house QR links) ----------------------------
+  var params = new URLSearchParams(window.location.search);
+  var presetProperty = (params.get('property') || '').trim().slice(0, 200);
+  function applyProperty() {
+    if (presetProperty) {
+      propInput.value = presetProperty;
+      document.getElementById('oh-property-line').textContent = 'Welcome to ' + presetProperty + '. Please sign in below.';
+      document.title = 'Open House Sign-In | ' + presetProperty;
+    }
+  }
+  applyProperty();
+
+  // ---- Follow Up Boss "Advanced" email-parser body -------------------------
+  // FUB requires every label to be present (blank if unused) and
+  // "New lead activity notification" at the top of the body.
+  function fubBody(d) {
+    var notes = [
+      'Open house sign-in' + (d.property ? ' at ' + d.property : ''),
+      'Working with an agent: ' + d.has_agent,
+      'Timeline: ' + d.timeline,
+      'Contact consent: ' + (d.consent ? 'Yes' : 'No') + ' (' + d.submitted_at + ')'
+    ];
+    if (d.notes) notes.push('Visitor notes: ' + d.notes);
+    var L = [
+      'New lead activity notification', '',
+      'First Name: ' + d.first_name,
+      'Last Name: ' + d.last_name,
+      'Email: ' + d.email,
+      'Phone: ' + d.phone, '',
+      'Source: ' + LEAD_SOURCE,
+      'Source URL: ' + d.page_url,
+      'Contacted: ',
+      'Event Type: Visited Open House',
+      'Lead Type: ',
+      'Lead Stage: ',
+      'Tags: Open House',
+      'Message: ' + (d.notes || ''),
+      'Description: Open house sign-in' + (d.property ? ' at ' + d.property : ''), '',
+      'Background: ', '',
+      'Property Street: ' + (d.property || ''),
+      'Property City: ', 'Property State: ', 'Property Postal Code: ', 'Property MLS Number: ',
+      'Property Price: ', 'Property URL: ', 'Property Type: ', 'Property Bedrooms: ',
+      'Property Bathrooms: ', 'Property Area: ', 'Property Lot: ', '',
+      'Address Street: ', 'Address City: ', 'Address State: ', 'Address Postal Code: ', '',
+      'Campaign Source: ', 'Campaign Medium: ', 'Campaign Term: ', 'Campaign Content: ', 'Campaign Campaign: ', '',
+      'Notes: ' + notes.join(' | ')
+    ];
+    return L.join('\n');
+  }
+
+  function payload(d) {
+    return {
+      access_key: WEB3FORMS_ACCESS_KEY,
+      subject: 'Open House Sign-In: ' + d.first_name + ' ' + d.last_name + (d.property ? ' - ' + d.property : ''),
+      from_name: 'Open House Sign-In',
+      replyto: d.email,
+      // The only content field, so the email body is the FUB parser block.
+      message: fubBody(d)
+    };
+  }
+
+  // ---- Offline / not-yet-configured queue ---------------------------------
+  function readQueue() { try { return JSON.parse(localStorage.getItem(QUEUE_KEY)) || []; } catch (e) { return []; } }
+  function writeQueue(q) { try { localStorage.setItem(QUEUE_KEY, JSON.stringify(q)); } catch (e) {} }
+  function send(d) {
+    if (!WEB3FORMS_ACCESS_KEY) return Promise.reject(new Error('not-configured'));
+    return fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload(d))
+    }).then(function (r) { return r.json().then(function (j) { if (!r.ok || !j.success) throw new Error(j.message || 'send failed'); return j; }); });
+  }
+  function flushQueue() {
+    var q = readQueue();
+    if (!q.length || !WEB3FORMS_ACCESS_KEY || !navigator.onLine) return;
+    var item = q[0];
+    send(item).then(function () { writeQueue(readQueue().slice(1)); flushQueue(); }).catch(function () {});
+  }
+  window.addEventListener('online', flushQueue);
+  flushQueue();
+
+  // ---- Submit / kiosk reset ----------------------------------------------
+  var resetTimer = null;
+  function showThanks(firstName) {
+    titleEl.textContent = firstName ? 'Thank you, ' + firstName + '!' : 'Thank you!';
+    formView.hidden = true; thanksView.hidden = false;
+    var left = RESET_SECONDS;
+    countEl.textContent = 'Ready for the next guest in ' + left + '…';
+    clearInterval(resetTimer);
+    resetTimer = setInterval(function () {
+      left -= 1;
+      if (left <= 0) { clearInterval(resetTimer); resetForm(); return; }
+      countEl.textContent = 'Ready for the next guest in ' + left + '…';
+    }, 1000);
+  }
+  function resetForm() {
+    form.reset(); applyProperty(); errorEl.textContent = '';
+    submitBtn.disabled = false; submitBtn.textContent = 'Sign In';
+    thanksView.hidden = true; formView.hidden = false;
+    window.scrollTo(0, 0);
+  }
+  thanksView.addEventListener('click', function () { clearInterval(resetTimer); resetForm(); });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    errorEl.textContent = '';
+    if (form.oh_website.value) { showThanks(''); return; } // bot
+    if (!form.checkValidity()) {
+      var bad = form.querySelector(':invalid');
+      errorEl.textContent = bad && bad.id === 'consent' ? 'Please check the consent box to sign in.' : 'Please complete the highlighted fields.';
+      if (bad) bad.focus();
+      return;
+    }
+    var fd = new FormData(form);
+    var d = {
+      first_name: (fd.get('first_name') || '').trim(),
+      last_name: (fd.get('last_name') || '').trim(),
+      email: (fd.get('email') || '').trim(),
+      phone: (fd.get('phone') || '').trim(),
+      property: (fd.get('property') || '').trim(),
+      has_agent: fd.get('has_agent') || '',
+      timeline: fd.get('timeline') || '',
+      notes: (fd.get('notes') || '').trim().replace(/\s*\n\s*/g, ' '),
+      consent: fd.get('consent') === 'Yes',
+      submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/Phoenix' }) + ' AZ',
+      page_url: location.origin + location.pathname
+    };
+    submitBtn.disabled = true; submitBtn.textContent = 'Signing in…';
+    send(d).then(function () { showThanks(d.first_name); })
+      .catch(function () {
+        // Never lose a guest: keep it on this device and retry later.
+        var q = readQueue(); q.push(d); writeQueue(q);
+        showThanks(d.first_name);
+      });
+  });
+})();
+</script>
+</body>
+</html>
