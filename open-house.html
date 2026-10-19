@@ -40,7 +40,7 @@
   .oh-choice.is-selected { background: var(--color-gold); border-color: var(--color-gold); color: #000; }
   .oh-fields { display: grid; gap: 0.85rem; max-width: 520px; margin: 0 auto; text-align: left; }
   .oh-fields.two { grid-template-columns: 1fr 1fr; }
-  .oh-fields label.oh-lbl { display: block; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 0.35rem; }
+  .oh-fields label.oh-lbl, .oh-fields span.oh-lbl { display: block; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 0.35rem; }
   .oh-input { width: 100%; min-height: 64px; font: inherit; font-size: 1.25rem; padding: 0.85rem 1rem; color: #000; background: #fff; border: 2px solid #fff; border-radius: var(--radius); -webkit-appearance: none; appearance: none; }
   textarea.oh-input { min-height: 88px; font-size: 1.05rem; resize: vertical; }
   .oh-input:focus { outline: none; border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(177,154,85,0.4); }
@@ -73,6 +73,14 @@
   .oh-end { min-height: 56px; font: inherit; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; background: #fff; color: #a12a1b; border: 2px solid #a12a1b; border-radius: var(--radius); cursor: pointer; }
   .oh-host .oh-ghost { color: #555; }
   .oh-status { font-size: 0.85rem; color: #555; text-align: center; margin: 0.75rem 0 0; }
+  .oh-card { text-align: center; background: rgba(0,0,0,0.55); border: 1px solid rgba(177,154,85,0.45); border-top: 4px solid var(--color-gold); border-radius: var(--radius); padding: clamp(1.25rem, 4vw, 2.25rem); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+  .oh-card .oh-sub { margin-bottom: 1.25rem; }
+  .oh-gap { margin-top: 0.85rem; }
+  .oh-card .oh-choice { min-height: 64px; }
+  .oh-choices.is-invalid .oh-choice { border-color: #e0816f; }
+  .oh-select { background-image: linear-gradient(45deg, transparent 50%, #000 50%), linear-gradient(135deg, #000 50%, transparent 50%); background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 2.5rem; font-size: 1.1rem; }
+  .oh-select:invalid { color: #777; }
+  .oh-select option { color: #000; }
   [hidden] { display: none !important; }
   @media (max-width: 560px) {
     .oh-fields.two { grid-template-columns: 1fr; }
@@ -123,76 +131,47 @@
       <form id="oh-form" novalidate>
         <div class="oh-hp" aria-hidden="true"><label for="oh_website">Website</label><input type="text" id="oh_website" name="oh_website" tabindex="-1" autocomplete="off"></div>
 
-        <section class="oh-step" data-step="agent" hidden>
+        <input type="hidden" name="property" id="f_property" value="">
+        <input type="hidden" name="mls" id="f_mls" value="">
+
+        <section class="oh-step oh-card" data-step="form" hidden>
           <span class="oh-eyebrow" data-welcome>Welcome</span>
-          <h1>Are you working with a real estate agent?</h1>
+          <h1>Open House Sign-In</h1>
           <p class="oh-sub" data-property-line>Thanks for stopping by. Sign in to tour the home.</p>
-          <div class="oh-choices two" role="group" aria-label="Working with an agent">
-            <button type="button" class="oh-choice" data-field="has_agent" data-value="Yes">Yes</button>
-            <button type="button" class="oh-choice" data-field="has_agent" data-value="No">No</button>
-          </div>
-        </section>
-
-        <section class="oh-step" data-step="timeline" hidden>
-          <button type="button" class="oh-ghost oh-back" data-back>&larr; Back</button>
-          <span class="oh-eyebrow">Question 2 of 5</span>
-          <h2>When are you hoping to move?</h2>
-          <p class="oh-sub">No pressure. It just helps Elizabeth send the right info.</p>
-          <div class="oh-choices" role="group" aria-label="Timeline">
-            <button type="button" class="oh-choice" data-field="timeline" data-value="Now / 0–3 months">Now / 0–3 months</button>
-            <button type="button" class="oh-choice" data-field="timeline" data-value="3–6 months">3–6 months</button>
-            <button type="button" class="oh-choice" data-field="timeline" data-value="6–12 months">6–12 months</button>
-            <button type="button" class="oh-choice" data-field="timeline" data-value="12+ months / Just looking">12+ months / Just looking</button>
-            <button type="button" class="oh-choice" data-field="timeline" data-value="I'm a neighbor">I'm a neighbor</button>
-          </div>
-        </section>
-
-        <section class="oh-step" data-step="email" hidden>
-          <button type="button" class="oh-ghost oh-back" data-back>&larr; Back</button>
-          <span class="oh-eyebrow">Question 3 of 5</span>
-          <h2>What's your email?</h2>
-          <p class="oh-sub">Get the property details, price updates and similar homes.</p>
-          <div class="oh-fields">
-            <label class="oh-lbl" for="email">Email</label>
-            <input class="oh-input" type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required enterkeyhint="next">
-          </div>
-          <button type="button" class="oh-next" data-next>Next</button>
-          <p class="oh-error" role="alert"></p>
-        </section>
-
-        <section class="oh-step" data-step="name" hidden>
-          <button type="button" class="oh-ghost oh-back" data-back>&larr; Back</button>
-          <span class="oh-eyebrow">Question 4 of 5</span>
-          <h2>And your name?</h2>
-          <p class="oh-sub">So Elizabeth knows who stopped by.</p>
           <div class="oh-fields two">
             <div><label class="oh-lbl" for="first_name">First name</label><input class="oh-input" type="text" id="first_name" name="first_name" autocomplete="given-name" autocapitalize="words" required enterkeyhint="next"></div>
             <div><label class="oh-lbl" for="last_name">Last name</label><input class="oh-input" type="text" id="last_name" name="last_name" autocomplete="family-name" autocapitalize="words" required enterkeyhint="next"></div>
           </div>
-          <button type="button" class="oh-next" data-next>Next</button>
-          <p class="oh-error" role="alert"></p>
-        </section>
-
-        <section class="oh-step" data-step="phone" hidden>
-          <button type="button" class="oh-ghost oh-back" data-back>&larr; Back</button>
-          <span class="oh-eyebrow">Last step</span>
-          <h2>Best number to reach you?</h2>
-          <p class="oh-sub">For quick answers about this home: price, HOA, disclosures and showings.</p>
-          <div class="oh-fields">
-            <label class="oh-lbl" for="phone">Phone</label>
-            <input class="oh-input" type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" required enterkeyhint="done">
-            <div id="note-wrap" hidden>
-              <label class="oh-lbl" for="notes">Note for Elizabeth (optional)</label>
-              <textarea class="oh-input" id="notes" name="notes" rows="2"></textarea>
+          <div class="oh-fields two oh-gap">
+            <div><label class="oh-lbl" for="email">Email</label><input class="oh-input" type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required enterkeyhint="next"></div>
+            <div><label class="oh-lbl" for="phone">Phone</label><input class="oh-input" type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" required enterkeyhint="next"></div>
+          </div>
+          <div class="oh-fields oh-gap">
+            <div>
+              <span class="oh-lbl" id="agent-lbl">Working with an agent?</span>
+              <div class="oh-choices two" role="radiogroup" aria-labelledby="agent-lbl" id="agent-group">
+                <button type="button" class="oh-choice" role="radio" data-field="has_agent" data-value="Yes">Yes</button>
+                <button type="button" class="oh-choice" role="radio" data-field="has_agent" data-value="No">No</button>
+              </div>
+            </div>
+            <div>
+              <label class="oh-lbl" for="timeline">When are you hoping to move?</label>
+              <select class="oh-input oh-select" id="timeline" name="timeline" required>
+                <option value="">Select a timeline</option>
+                <option>Now / 0–3 months</option>
+                <option>3–6 months</option>
+                <option>6–12 months</option>
+                <option>12+ months / Just looking</option>
+                <option>I'm a neighbor</option>
+              </select>
             </div>
           </div>
-          <button type="button" class="oh-ghost oh-note-toggle" id="note-toggle">+ Add a note (optional)</button>
           <label class="oh-consent">
             <input type="checkbox" id="consent" name="consent" value="Yes" required>
             <span>I agree that Elizabeth Vijan (Tackett Team, eXp Realty) may contact me by phone, text or email about this home and other real estate services. Message and data rates may apply. Reply STOP to opt out of texts at any time.</span>
           </label>
           <button type="submit" class="oh-next" id="oh-submit">Sign In</button>
-          <p class="oh-error" role="alert"></p>
+          <p class="oh-error" id="oh-error" role="alert"></p>
         </section>
 
         <section class="oh-step" data-step="thanks" hidden aria-live="polite">
@@ -217,10 +196,9 @@
   var ENDPOINT = 'https://api.web3forms.com/submit';
   var LEAD_SOURCE = 'Open House';
   var RESET_SECONDS = 6;
-  var IDLE_RESET_SECONDS = 90;           // abandoned mid-flow -> back to start
+  var IDLE_RESET_SECONDS = 90;           // half-filled form left idle -> cleared
   var QUEUE_KEY = 'ev_open_house_queue_v1';
   var HOST_KEY = 'ev_open_house_host_v1';
-  var GUEST_STEPS = ['agent', 'timeline', 'email', 'name', 'phone'];
 
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -290,67 +268,61 @@
   ['touchend', 'touchcancel', 'mouseup', 'mouseleave'].forEach(function (ev) { logo.addEventListener(ev, lpEnd); });
   logo.addEventListener('contextmenu', function (e) { e.preventDefault(); });
 
-  // ---- Guest flow ----------------------------------------------------------
+  // ---- Guest form (single page) -------------------------------------------
   function show(step) {
     $$('.oh-step', form).forEach(function (s) { s.hidden = s.getAttribute('data-step') !== step; });
     current = step;
-    var i = GUEST_STEPS.indexOf(step);
-    progressWrap.hidden = false;
-    progress.style.width = (step === 'thanks' ? 100 : Math.max(8, (i / GUEST_STEPS.length) * 100)) + '%';
-    var sec = $('[data-step="' + step + '"]', form);
-    var first = sec && sec.querySelector('input:not([type=checkbox]), .oh-choice');
-    if (first && first.tagName === 'INPUT') setTimeout(function () { first.focus(); }, 60);
+    progressWrap.hidden = true;
     bumpIdle();
   }
   function startGuest() {
+    stopTimers();
     form.reset(); answers = {};
-    $$('.oh-choice', form).forEach(function (b) { b.classList.remove('is-selected'); b.setAttribute('aria-pressed', 'false'); });
-    $$('.oh-error', form).forEach(function (e) { e.textContent = ''; });
+    $$('.oh-choice', form).forEach(function (b) { b.classList.remove('is-selected'); b.setAttribute('aria-checked', 'false'); });
+    $('#agent-group').classList.remove('is-invalid');
+    $('#oh-error').textContent = '';
     $$('[aria-invalid]', form).forEach(function (e) { e.removeAttribute('aria-invalid'); });
-    $('#note-wrap').hidden = true; $('#note-toggle').hidden = false;
+    $('#f_property').value = (host && host.property) || '';
+    $('#f_mls').value = (host && host.mls) || '';
     $('#oh-submit').disabled = false; $('#oh-submit').textContent = 'Sign In';
     applyHostText();
-    show('agent');
+    show('form');
     window.scrollTo(0, 0);
   }
-  function next() { var i = GUEST_STEPS.indexOf(current); if (i > -1 && i < GUEST_STEPS.length - 1) show(GUEST_STEPS[i + 1]); }
-  function back() { var i = GUEST_STEPS.indexOf(current); if (i > 0) show(GUEST_STEPS[i - 1]); }
 
   $$('.oh-choice', form).forEach(function (b) {
-    b.setAttribute('aria-pressed', 'false');
+    b.setAttribute('aria-checked', 'false');
     b.addEventListener('click', function () {
       var f = b.getAttribute('data-field');
       answers[f] = b.getAttribute('data-value');
-      $$('.oh-choice[data-field="' + f + '"]', form).forEach(function (x) { x.classList.toggle('is-selected', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      setTimeout(next, 220);   // auto-advance
+      $$('.oh-choice[data-field="' + f + '"]', form).forEach(function (x) { x.classList.toggle('is-selected', x === b); x.setAttribute('aria-checked', x === b ? 'true' : 'false'); });
+      $('#agent-group').classList.remove('is-invalid');
     });
   });
-  $$('[data-back]', form).forEach(function (b) { b.addEventListener('click', back); });
 
-  function validateStep(step) {
-    var sec = $('[data-step="' + step + '"]', form), err = sec.querySelector('.oh-error');
-    var bad = null;
-    $$('input[required]', sec).forEach(function (inp) {
-      var ok = inp.type === 'checkbox' ? inp.checked : inp.value.trim() !== '' && inp.checkValidity();
-      if (inp.id === 'phone' && ok) ok = inp.value.replace(/\D/g, '').length >= 10;
-      if (inp.type !== 'checkbox') inp.setAttribute('aria-invalid', ok ? 'false' : 'true');
-      if (!ok && !bad) bad = inp;
+  function validateForm() {
+    var err = $('#oh-error'), bad = null, msg = '';
+    ['first_name', 'last_name', 'email', 'phone'].forEach(function (id) {
+      var inp = $('#' + id), ok = inp.value.trim() !== '' && inp.checkValidity();
+      if (id === 'phone' && ok) ok = inp.value.replace(/\D/g, '').length >= 10;
+      inp.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      if (!ok && !bad) { bad = inp; msg = id === 'email' ? 'Please enter a valid email.' : id === 'phone' ? 'Please enter a 10-digit phone number.' : 'Please enter your first and last name.'; }
     });
-    if (bad) {
-      err.textContent = bad.id === 'email' ? 'Please enter a valid email.' : bad.id === 'phone' ? 'Please enter a 10-digit phone number.' : bad.id === 'consent' ? 'Please check the box to sign in.' : 'Please fill this in.';
-      bad.focus(); return false;
-    }
+    if (!bad && !answers.has_agent) { $('#agent-group').classList.add('is-invalid'); bad = $('.oh-choice', form); msg = 'Please tell us if you are working with an agent.'; }
+    var tl = $('#timeline'); tl.setAttribute('aria-invalid', tl.value ? 'false' : 'true');
+    if (!bad && !tl.value) { bad = tl; msg = 'Please choose a timeline.'; }
+    if (!bad && !$('#consent').checked) { bad = $('#consent'); msg = 'Please check the box to sign in.'; }
+    if (bad) { err.textContent = msg; bad.focus(); return false; }
     err.textContent = ''; return true;
   }
-  $$('[data-next]', form).forEach(function (b) { b.addEventListener('click', function () { if (validateStep(current)) next(); }); });
+  // Enter moves to the next field instead of submitting early.
   form.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' && e.target.tagName === 'INPUT' && current !== 'phone') {
+    if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type !== 'checkbox') {
       e.preventDefault();
-      if (e.target.id === 'first_name') { $('#last_name').focus(); return; }
-      if (validateStep(current)) next();
+      var order = ['first_name', 'last_name', 'email', 'phone'], i = order.indexOf(e.target.id);
+      if (i > -1 && i < order.length - 1) $('#' + order[i + 1]).focus(); else $('.oh-choice', form).focus();
     }
   });
-  $('#note-toggle').addEventListener('click', function () { $('#note-wrap').hidden = false; this.hidden = true; $('#notes').focus(); });
 
   // ---- Follow Up Boss "Advanced" email-parser body (unchanged format) ------
   function fubBody(d) {
@@ -421,9 +393,10 @@
   // ---- Submit / kiosk reset -----------------------------------------------
   var resetTimer = null, idleTimer = null;
   function stopTimers() { clearInterval(resetTimer); clearTimeout(idleTimer); }
+  function formDirty() { return ['first_name', 'last_name', 'email', 'phone', 'timeline'].some(function (id) { return $('#' + id).value.trim() !== ''; }) || !!answers.has_agent || $('#consent').checked; }
   function bumpIdle() {
     clearTimeout(idleTimer);
-    if (current && current !== 'agent' && current !== 'thanks' && current !== 'host') idleTimer = setTimeout(startGuest, IDLE_RESET_SECONDS * 1000);
+    if (current === 'form' && formDirty()) idleTimer = setTimeout(startGuest, IDLE_RESET_SECONDS * 1000);
   }
   ['input', 'click', 'touchstart', 'keydown'].forEach(function (ev) { document.addEventListener(ev, bumpIdle, { passive: true }); });
 
@@ -443,9 +416,9 @@
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    if (current !== 'phone') return;
+    if (current !== 'form') return;
     if (form.oh_website.value) { showThanks(''); return; }  // bot
-    if (!validateStep('phone')) return;
+    if (!validateForm()) return;
     var fd = new FormData(form);
     var d = {
       first_name: (fd.get('first_name') || '').trim(),
@@ -455,8 +428,8 @@
       property: (host && host.property) || '',
       mls: (host && host.mls) || '',
       has_agent: answers.has_agent || '',
-      timeline: answers.timeline || '',
-      notes: (fd.get('notes') || '').trim().replace(/\s*\n\s*/g, ' '),
+      timeline: (fd.get('timeline') || '').trim(),
+      notes: '',
       consent: fd.get('consent') === 'Yes',
       submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/Phoenix' }) + ' AZ',
       page_url: location.origin + location.pathname
