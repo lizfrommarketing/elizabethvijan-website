@@ -76,6 +76,7 @@
   .oh-card { text-align: center; background: rgba(0,0,0,0.55); border: 1px solid rgba(177,154,85,0.45); border-top: 4px solid var(--color-gold); border-radius: var(--radius); padding: clamp(1.25rem, 4vw, 2.25rem); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
   .oh-card .oh-sub { margin-bottom: 1.25rem; }
   .oh-gap { margin-top: 0.85rem; }
+  .oh-hint { max-width: 520px; margin: 0.45rem auto 0; text-align: left; font-size: 0.85rem; color: rgba(255,255,255,0.72); }
   .oh-card .oh-choice { min-height: 64px; }
   .oh-choices.is-invalid .oh-choice { border-color: #e0816f; }
   .oh-select { background-image: linear-gradient(45deg, transparent 50%, #000 50%), linear-gradient(135deg, #000 50%, transparent 50%); background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 2.5rem; font-size: 1.1rem; }
@@ -143,9 +144,10 @@
             <div><label class="oh-lbl" for="last_name">Last name</label><input class="oh-input" type="text" id="last_name" name="last_name" autocomplete="family-name" autocapitalize="words" required enterkeyhint="next"></div>
           </div>
           <div class="oh-fields two oh-gap">
-            <div><label class="oh-lbl" for="email">Email</label><input class="oh-input" type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required enterkeyhint="next"></div>
-            <div><label class="oh-lbl" for="phone">Phone</label><input class="oh-input" type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" required enterkeyhint="next"></div>
+            <div><label class="oh-lbl" for="email">Email</label><input class="oh-input" type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" enterkeyhint="next"></div>
+            <div><label class="oh-lbl" for="phone">Phone</label><input class="oh-input" type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" enterkeyhint="next"></div>
           </div>
+          <p class="oh-hint">Email or phone — whichever you prefer</p>
           <div class="oh-fields oh-gap">
             <div>
               <span class="oh-lbl" id="agent-lbl">Working with an agent?</span>
@@ -302,12 +304,20 @@
 
   function validateForm() {
     var err = $('#oh-error'), bad = null, msg = '';
-    ['first_name', 'last_name', 'email', 'phone'].forEach(function (id) {
-      var inp = $('#' + id), ok = inp.value.trim() !== '' && inp.checkValidity();
-      if (id === 'phone' && ok) ok = inp.value.replace(/\D/g, '').length >= 10;
+    ['first_name', 'last_name'].forEach(function (id) {
+      var inp = $('#' + id), ok = inp.value.trim() !== '';
       inp.setAttribute('aria-invalid', ok ? 'false' : 'true');
-      if (!ok && !bad) { bad = inp; msg = id === 'email' ? 'Please enter a valid email.' : id === 'phone' ? 'Please enter a 10-digit phone number.' : 'Please enter your first and last name.'; }
+      if (!ok && !bad) { bad = inp; msg = 'Please enter your first and last name.'; }
     });
+    var em = $('#email'), ph = $('#phone'), ev = em.value.trim(), pv = ph.value.trim();
+    var emOk = ev === '' || (em.checkValidity() && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ev));
+    var phOk = pv === '' || pv.replace(/\D/g, '').replace(/^1(?=\d{10}$)/, '').length === 10;
+    var none = ev === '' && pv === '';
+    em.setAttribute('aria-invalid', (none || !emOk) ? 'true' : 'false');
+    ph.setAttribute('aria-invalid', (none || !phOk) ? 'true' : 'false');
+    if (!bad && none) { bad = em; msg = 'Please enter an email or phone number.'; }
+    if (!bad && !emOk) { bad = em; msg = 'Please enter a valid email.'; }
+    if (!bad && !phOk) { bad = ph; msg = 'Please enter a 10-digit phone number.'; }
     if (!bad && !answers.has_agent) { $('#agent-group').classList.add('is-invalid'); bad = $('.oh-choice', form); msg = 'Please tell us if you are working with an agent.'; }
     var tl = $('#timeline'); tl.setAttribute('aria-invalid', tl.value ? 'false' : 'true');
     if (!bad && !tl.value) { bad = tl; msg = 'Please choose a timeline.'; }
@@ -366,7 +376,7 @@
       access_key: WEB3FORMS_ACCESS_KEY,
       subject: 'Open House Sign-In: ' + d.first_name + ' ' + d.last_name + (d.property ? ' - ' + d.property : ''),
       from_name: 'Open House Sign-In',
-      replyto: d.email,
+      replyto: d.email || undefined,
       message: fubBody(d)
     };
   }
