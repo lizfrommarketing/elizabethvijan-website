@@ -14,175 +14,349 @@
 <link rel="icon" href="assets/images/exp-realty-logo.png">
 <link rel="stylesheet" href="css/styles.css">
 <style>
-  /* Open house sign-in (kiosk) — page-only styles */
-  body.oh { background: #000; color: #fff; min-height: 100vh; }
+  /* Open house sign-in: one question per screen (kiosk) */
+  body.oh { background: #000; color: #fff; min-height: 100vh; min-height: 100dvh; overflow-x: hidden; }
   .oh-bg { position: fixed; inset: 0; z-index: 0; }
   .oh-bg img { width: 100%; height: 100%; object-fit: cover; }
-  .oh-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.72), rgba(0,0,0,0.88)); }
-  .oh-wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: clamp(1.25rem, 4vw, 3rem) clamp(1rem, 4vw, 2rem) 3rem; }
-  .oh-brand { display: flex; justify-content: center; margin-bottom: 1.25rem; }
-  .oh-brand img { height: 52px; width: auto; }
-  .oh-card { background: #fff; color: #000; border-top: 4px solid var(--color-gold); padding: clamp(1.25rem, 4vw, 2.5rem); border-radius: var(--radius); box-shadow: 0 20px 60px rgba(0,0,0,0.45); }
-  .oh-card h1 { font-family: var(--font-serif); font-size: clamp(1.6rem, 5vw, 2.4rem); line-height: 1.15; margin: 0 0 0.35rem; text-align: center; }
-  .oh-eyebrow { display: block; text-align: center; color: var(--color-gold-dark); font-size: 0.8rem; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 0.5rem; }
-  .oh-property { text-align: center; color: #444; margin: 0 0 1.5rem; font-size: 1.05rem; overflow-wrap: anywhere; }
-  .oh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.1rem; }
-  .oh-grid .full { grid-column: 1 / -1; }
-  .oh-field label, .oh-legend { display: block; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.4rem; }
-  .oh-field .opt { font-weight: 400; text-transform: none; letter-spacing: 0; color: #777; }
-  .oh-field input[type=text], .oh-field input[type=email], .oh-field input[type=tel], .oh-field select, .oh-field textarea {
-    width: 100%; min-height: 56px; font: inherit; font-size: 1.15rem; padding: 0.8rem 0.9rem; border: 1.5px solid #cfc7ae; border-radius: var(--radius); background: #fff; color: #000; -webkit-appearance: none; appearance: none; }
-  .oh-field select { background-image: linear-gradient(45deg, transparent 50%, #8c7645 50%), linear-gradient(135deg, #8c7645 50%, transparent 50%); background-position: calc(100% - 22px) 50%, calc(100% - 16px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 2.5rem; }
-  .oh-field textarea { min-height: 96px; resize: vertical; }
-  .oh-field input:focus, .oh-field select:focus, .oh-field textarea:focus { outline: none; border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(177,154,85,0.3); }
-  .oh-choice { display: flex; gap: 0.75rem; }
-  .oh-choice label { flex: 1; position: relative; margin: 0; }
-  .oh-choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-  .oh-choice span { display: flex; align-items: center; justify-content: center; min-height: 56px; border: 1.5px solid #cfc7ae; border-radius: var(--radius); font-size: 1.1rem; font-weight: 500; cursor: pointer; user-select: none; }
-  .oh-choice input:checked + span { background: #000; color: #fff; border-color: #000; }
-  .oh-choice input:focus-visible + span { box-shadow: 0 0 0 3px rgba(177,154,85,0.45); }
-  .oh-consent { text-transform: none; letter-spacing: 0; font-weight: 400; display: flex; gap: 0.8rem; align-items: flex-start; font-size: 0.95rem; line-height: 1.45; color: #333; }
-  .oh-consent input { width: 28px; height: 28px; flex: 0 0 28px; margin: 0.1rem 0 0; accent-color: #000; }
-  .oh-submit { width: 100%; min-height: 64px; margin-top: 0.5rem; font-size: 1.05rem; letter-spacing: 0.18em; text-transform: uppercase; background: #000; color: #fff; border: 2px solid #000; border-radius: var(--radius); cursor: pointer; font-family: var(--font-sans); font-weight: 600; }
-  .oh-submit:hover, .oh-submit:focus-visible { background: var(--color-gold-dark); border-color: var(--color-gold-dark); }
-  .oh-submit[disabled] { opacity: 0.6; cursor: wait; }
-  .oh-error { color: #a12a1b; font-size: 0.95rem; min-height: 1.2em; margin: 0.6rem 0 0; text-align: center; }
+  .oh-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.82) 60%, rgba(0,0,0,0.92) 100%); }
+  .oh-shell { position: relative; z-index: 1; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; padding: max(1rem, env(safe-area-inset-top)) clamp(1rem, 4vw, 2.5rem) max(1.25rem, env(safe-area-inset-bottom)); }
+  .oh-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .oh-logo { height: 46px; width: auto; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  .oh-gear { width: 44px; height: 44px; border: 0; background: transparent; color: rgba(255,255,255,0.28); cursor: pointer; padding: 10px; border-radius: 50%; }
+  .oh-gear:hover, .oh-gear:focus-visible { color: var(--color-gold); }
+  .oh-gear svg { width: 100%; height: 100%; fill: currentColor; }
+  .oh-progress { height: 4px; background: rgba(255,255,255,0.18); border-radius: 4px; margin: 1.25rem auto 0; width: 100%; max-width: 640px; overflow: hidden; }
+  .oh-progress span { display: block; height: 100%; width: 0; background: var(--color-gold); transition: width 0.35s ease; }
+  .oh-main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 1.5rem 0; }
+  .oh-step { width: 100%; max-width: 640px; text-align: center; animation: ohIn 0.35s ease; }
+  @keyframes ohIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  .oh-eyebrow { display: block; color: var(--color-gold); font-size: 0.8rem; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .oh-step h1, .oh-step h2 { font-family: var(--font-serif); color: #fff; font-size: clamp(1.7rem, 5.5vw, 2.7rem); line-height: 1.15; margin: 0 0 0.6rem; }
+  .oh-sub { color: rgba(255,255,255,0.8); font-size: clamp(1rem, 2.6vw, 1.15rem); margin: 0 auto 1.75rem; max-width: 520px; overflow-wrap: anywhere; }
+  .oh-choices { display: grid; gap: 0.85rem; max-width: 520px; margin: 0 auto; }
+  .oh-choices.two { grid-template-columns: 1fr 1fr; }
+  .oh-choice { min-height: 68px; padding: 1rem 1.25rem; font: inherit; font-size: 1.15rem; font-weight: 500; color: #000; background: #fff; border: 2px solid #fff; border-radius: var(--radius); cursor: pointer; transition: background var(--transition), color var(--transition), border-color var(--transition); }
+  .oh-choice:hover, .oh-choice:focus-visible { border-color: var(--color-gold); outline: none; }
+  .oh-choice.is-selected { background: var(--color-gold); border-color: var(--color-gold); color: #000; }
+  .oh-fields { display: grid; gap: 0.85rem; max-width: 520px; margin: 0 auto; text-align: left; }
+  .oh-fields.two { grid-template-columns: 1fr 1fr; }
+  .oh-fields label.oh-lbl { display: block; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 0.35rem; }
+  .oh-input { width: 100%; min-height: 64px; font: inherit; font-size: 1.25rem; padding: 0.85rem 1rem; color: #000; background: #fff; border: 2px solid #fff; border-radius: var(--radius); -webkit-appearance: none; appearance: none; }
+  textarea.oh-input { min-height: 88px; font-size: 1.05rem; resize: vertical; }
+  .oh-input:focus { outline: none; border-color: var(--color-gold); box-shadow: 0 0 0 3px rgba(177,154,85,0.4); }
+  .oh-input[aria-invalid="true"] { border-color: #e0816f; }
+  .oh-next { display: block; width: 100%; max-width: 520px; margin: 1.25rem auto 0; min-height: 64px; font-family: var(--font-sans); font-size: 1.05rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #000; background: var(--color-gold); border: 2px solid var(--color-gold); border-radius: var(--radius); cursor: pointer; }
+  .oh-next:hover, .oh-next:focus-visible { background: #c9b26a; border-color: #c9b26a; outline: none; }
+  .oh-next[disabled] { opacity: 0.6; cursor: wait; }
+  .oh-ghost { display: inline-block; margin-top: 0.9rem; min-height: 44px; padding: 0.6rem 1rem; background: transparent; border: 0; color: rgba(255,255,255,0.75); font: inherit; font-size: 0.95rem; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .oh-ghost:hover, .oh-ghost:focus-visible { color: #fff; }
+  .oh-back { position: absolute; left: 0; top: -0.25rem; }
+  .oh-step-wrap { position: relative; width: 100%; max-width: 640px; }
+  .oh-error { color: #ffb3a5; min-height: 1.3em; margin: 0.75rem 0 0; font-size: 0.95rem; }
+  .oh-consent { display: flex; gap: 0.75rem; align-items: flex-start; text-align: left; max-width: 520px; margin: 1rem auto 0; font-size: 0.88rem; line-height: 1.5; color: rgba(255,255,255,0.82); text-transform: none; letter-spacing: 0; font-weight: 400; }
+  .oh-consent input { width: 26px; height: 26px; flex: 0 0 26px; margin: 0.1rem 0 0; accent-color: var(--color-gold); }
+  .oh-note-toggle { margin-top: 0.4rem; }
   .oh-hp { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; overflow: hidden; }
-  .oh-thanks { text-align: center; padding: 2.5rem 0.5rem; }
-  .oh-thanks h2 { font-family: var(--font-serif); font-size: clamp(1.8rem, 6vw, 2.6rem); margin: 0 0 0.75rem; }
-  .oh-thanks p { font-size: 1.15rem; color: #333; margin: 0 0 0.5rem; }
-  .oh-thanks .oh-count { color: #888; font-size: 0.95rem; margin-top: 1.25rem; }
-  .oh-check { width: 72px; height: 72px; margin: 0 auto 1rem; border-radius: 50%; background: #000; color: var(--color-gold); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; }
-  .oh-foot { text-align: center; color: rgba(255,255,255,0.75); font-size: 0.85rem; margin-top: 1.25rem; line-height: 1.6; }
-  .oh-foot a { color: #fff; }
+  .oh-check { width: 84px; height: 84px; margin: 0 auto 1.25rem; border-radius: 50%; border: 2px solid var(--color-gold); color: var(--color-gold); display: flex; align-items: center; justify-content: center; font-size: 2.4rem; }
+  .oh-count { color: rgba(255,255,255,0.6); font-size: 0.95rem; margin-top: 1.5rem; }
+  .oh-foot { text-align: center; color: rgba(255,255,255,0.6); font-size: 0.8rem; line-height: 1.6; }
+  .oh-foot a { color: rgba(255,255,255,0.85); }
+  .oh-host { background: #fff; color: #000; text-align: left; padding: clamp(1.25rem, 4vw, 2rem); border-top: 4px solid var(--color-gold); border-radius: var(--radius); }
+  .oh-host h2 { color: #000; font-size: clamp(1.5rem, 4.5vw, 2rem); text-align: center; }
+  .oh-host .oh-sub { color: #555; text-align: center; }
+  .oh-host label.oh-lbl { color: #333; }
+  .oh-host .oh-input { border-color: #cfc7ae; }
+  .oh-host .oh-note { font-size: 0.85rem; color: #666; margin: 0.25rem 0 0; }
+  .oh-host .oh-actions { display: grid; gap: 0.75rem; margin-top: 1.25rem; }
+  .oh-host .oh-next { max-width: none; margin: 0; background: #000; border-color: #000; color: #fff; }
+  .oh-host .oh-next:hover, .oh-host .oh-next:focus-visible { background: var(--color-gold-dark); border-color: var(--color-gold-dark); }
+  .oh-end { min-height: 56px; font: inherit; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; background: #fff; color: #a12a1b; border: 2px solid #a12a1b; border-radius: var(--radius); cursor: pointer; }
+  .oh-host .oh-ghost { color: #555; }
+  .oh-status { font-size: 0.85rem; color: #555; text-align: center; margin: 0.75rem 0 0; }
   [hidden] { display: none !important; }
-  @media (max-width: 560px) { .oh-grid { grid-template-columns: 1fr; } .oh-brand img { height: 42px; } }
+  @media (max-width: 560px) {
+    .oh-fields.two { grid-template-columns: 1fr; }
+    .oh-logo { height: 38px; }
+    .oh-back { position: static; display: block; margin: 0 auto 0.5rem; }
+  }
 </style>
 </head>
 <body class="oh">
 <div class="oh-bg" aria-hidden="true"><img src="assets/images/photos/luxury-home-pool-dusk-1200.webp" srcset="assets/images/photos/luxury-home-pool-dusk-640.webp 640w, assets/images/photos/luxury-home-pool-dusk-1200.webp 1200w, assets/images/photos/luxury-home-pool-dusk-1920.webp 1920w" sizes="100vw" alt="" width="1200" height="798" decoding="async"></div>
 
-<main class="oh-wrap">
-  <div class="oh-brand"><img src="assets/images/tackett-logo-white.png" alt="Tackett Team, powered by eXp Realty"></div>
+<div class="oh-shell">
+  <header class="oh-top">
+    <img class="oh-logo" id="oh-logo" src="assets/images/tackett-logo-white.png" alt="Tackett Team, powered by eXp Realty" draggable="false">
+    <button type="button" class="oh-gear" id="oh-gear" aria-label="Host setup"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.4 13a7.5 7.5 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.4 7.4 0 0 0-1.7-1L15 3h-4l-.4 2.9a7.4 7.4 0 0 0-1.7 1l-2.5-1-2 3.5L6.6 11a7.5 7.5 0 0 0 0 2l-2.2 1.6 2 3.5 2.5-1a7.4 7.4 0 0 0 1.7 1L11 21h4l.4-2.9a7.4 7.4 0 0 0 1.7-1l2.5 1 2-3.5zM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg></button>
+  </header>
+  <div class="oh-progress" id="oh-progress-wrap" aria-hidden="true"><span id="oh-progress"></span></div>
 
-  <div class="oh-card">
-    <section id="oh-form-view">
-      <span class="oh-eyebrow">Welcome</span>
-      <h1>Open House Sign-In</h1>
-      <p class="oh-property" id="oh-property-line">Thanks for stopping by. Please sign in below.</p>
+  <main class="oh-main">
+    <div class="oh-step-wrap">
 
+      <!-- Host setup (agent only) -->
+      <section class="oh-step oh-host" id="step-host" hidden>
+        <span class="oh-eyebrow">Host setup</span>
+        <h2>Start an open house</h2>
+        <p class="oh-sub">Enter the listing once. Every guest sign-in on this device will include it automatically. Guests won't see these fields.</p>
+        <form id="host-form" class="oh-fields" novalidate>
+          <div>
+            <label class="oh-lbl" for="host_property">Property address</label>
+            <input class="oh-input" type="text" id="host_property" autocomplete="off" required placeholder="1234 E Example Rd, Scottsdale, AZ 85250">
+          </div>
+          <div>
+            <label class="oh-lbl" for="host_mls">MLS number</label>
+            <input class="oh-input" type="text" id="host_mls" autocomplete="off" inputmode="numeric" placeholder="e.g. 6712345">
+            <p class="oh-note">Type the address yourself. There's no MLS lookup on this page.</p>
+          </div>
+          <p class="oh-error" id="host-error" role="alert"></p>
+          <div class="oh-actions">
+            <button type="submit" class="oh-next">Start open house</button>
+            <button type="button" class="oh-end" id="host-end" hidden>End open house &amp; clear</button>
+            <button type="button" class="oh-ghost" id="host-cancel" hidden>Back to guest sign-in</button>
+          </div>
+          <p class="oh-status" id="host-status"></p>
+        </form>
+      </section>
+
+      <!-- Guest flow -->
       <form id="oh-form" novalidate>
-        <div class="oh-grid">
-          <div class="oh-field">
-            <label for="first_name">First name</label>
-            <input type="text" id="first_name" name="first_name" autocomplete="given-name" autocapitalize="words" required>
+        <div class="oh-hp" aria-hidden="true"><label for="oh_website">Website</label><input type="text" id="oh_website" name="oh_website" tabindex="-1" autocomplete="off"></div>
+
+        <section class="oh-step" data-step="agent" hidden>
+          <span class="oh-eyebrow" data-welcome>Welcome</span>
+          <h1>Are you working with a real estate agent?</h1>
+          <p class="oh-sub" data-property-line>Thanks for stopping by. Sign in to tour the home.</p>
+          <div class="oh-choices two" role="group" aria-label="Working with an agent">
+            <button type="button" class="oh-choice" data-field="has_agent" data-value="Yes">Yes</button>
+            <button type="button" class="oh-choice" data-field="has_agent" data-value="No">No</button>
           </div>
-          <div class="oh-field">
-            <label for="last_name">Last name</label>
-            <input type="text" id="last_name" name="last_name" autocomplete="family-name" autocapitalize="words" required>
+        </section>
+
+        <section class="oh-step" data-step="timeline" hidden>
+          <button type="button" class="oh-ghost oh-back" data-back>&larr; Back</button>
+          <span class="oh-eyebrow">Question 2 of 5</span>
+          <h2>When are you hoping to move?</h2>
+          <p class="oh-sub">No pressure. It just helps Elizabeth send the right info.</p>
+          <div class="oh-choices" role="group" aria-label="Timeline">
+            <button type="button" class="oh-choice" data-field="timeline" data-value="Now / 0–3 months">Now / 0–3 months</button>
+            <button type="button" class="oh-choice" data-field="timeline" data-value="3–6 months">3–6 months</button>
+            <button type="button" class="oh-choice" data-field="timeline" data-value="6–12 months">6–12 months</button>
+            <button type="button" class="oh-choice" data-field="timeline" data-value="12+ months / Just looking">12+ months / Just looking</button>
+            <button type="button" class="oh-choice" data-field="timeline" data-value="I'm a neighbor">I'm a neighbor</button>
           </div>
-          <div class="oh-field">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required>
+        </section>
+
+        <section class="oh-step" data-step="email" hidden>
+          <button type="button" class="oh-ghost oh-back" data-back>&larr; Back</button>
+          <span class="oh-eyebrow">Question 3 of 5</span>
+          <h2>What's your email?</h2>
+          <p class="oh-sub">Get the property details, price updates and similar homes.</p>
+          <div class="oh-fields">
+            <label class="oh-lbl" for="email">Email</label>
+            <input class="oh-input" type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required enterkeyhint="next">
           </div>
-          <div class="oh-field">
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" required>
+          <button type="button" class="oh-next" data-next>Next</button>
+          <p class="oh-error" role="alert"></p>
+        </section>
+
+        <section class="oh-step" data-step="name" hidden>
+          <button type="button" class="oh-ghost oh-back" data-back>&larr; Back</button>
+          <span class="oh-eyebrow">Question 4 of 5</span>
+          <h2>And your name?</h2>
+          <p class="oh-sub">So Elizabeth knows who stopped by.</p>
+          <div class="oh-fields two">
+            <div><label class="oh-lbl" for="first_name">First name</label><input class="oh-input" type="text" id="first_name" name="first_name" autocomplete="given-name" autocapitalize="words" required enterkeyhint="next"></div>
+            <div><label class="oh-lbl" for="last_name">Last name</label><input class="oh-input" type="text" id="last_name" name="last_name" autocomplete="family-name" autocapitalize="words" required enterkeyhint="next"></div>
           </div>
-          <div class="oh-field full">
-            <label for="property">Property address</label>
-            <input type="text" id="property" name="property" autocomplete="off" required>
-          </div>
-          <fieldset class="oh-field full" style="border:0;padding:0;margin:0;">
-            <legend class="oh-legend">Are you working with an agent?</legend>
-            <div class="oh-choice">
-              <label><input type="radio" name="has_agent" value="Yes" required><span>Yes</span></label>
-              <label><input type="radio" name="has_agent" value="No"><span>No</span></label>
+          <button type="button" class="oh-next" data-next>Next</button>
+          <p class="oh-error" role="alert"></p>
+        </section>
+
+        <section class="oh-step" data-step="phone" hidden>
+          <button type="button" class="oh-ghost oh-back" data-back>&larr; Back</button>
+          <span class="oh-eyebrow">Last step</span>
+          <h2>Best number to reach you?</h2>
+          <p class="oh-sub">For quick answers about this home: price, HOA, disclosures and showings.</p>
+          <div class="oh-fields">
+            <label class="oh-lbl" for="phone">Phone</label>
+            <input class="oh-input" type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" required enterkeyhint="done">
+            <div id="note-wrap" hidden>
+              <label class="oh-lbl" for="notes">Note for Elizabeth (optional)</label>
+              <textarea class="oh-input" id="notes" name="notes" rows="2"></textarea>
             </div>
-          </fieldset>
-          <div class="oh-field full">
-            <label for="timeline">When are you hoping to buy?</label>
-            <select id="timeline" name="timeline" required>
-              <option value="">Select one</option>
-              <option>Now / 0–3 months</option>
-              <option>3–6 months</option>
-              <option>6–12 months</option>
-              <option>12+ months</option>
-              <option>Just looking</option>
-              <option>I'm a neighbor</option>
-            </select>
           </div>
-          <div class="oh-field full">
-            <label for="notes">Notes <span class="opt">(optional)</span></label>
-            <textarea id="notes" name="notes" rows="3" placeholder="Anything you'd like Elizabeth to know?"></textarea>
-          </div>
-          <div class="oh-hp" aria-hidden="true">
-            <label for="oh_website">Website</label>
-            <input type="text" id="oh_website" name="oh_website" tabindex="-1" autocomplete="off">
-          </div>
-          <div class="full">
-            <label class="oh-consent">
-              <input type="checkbox" id="consent" name="consent" value="Yes" required>
-              <span>I agree that Elizabeth Vijan (Tackett Team, eXp Realty) may contact me by phone, text or email about this home and other real estate services. Message and data rates may apply. Reply STOP to opt out of texts at any time.</span>
-            </label>
-          </div>
-        </div>
-        <button type="submit" class="oh-submit" id="oh-submit">Sign In</button>
-        <p class="oh-error" id="oh-error" role="alert"></p>
+          <button type="button" class="oh-ghost oh-note-toggle" id="note-toggle">+ Add a note (optional)</button>
+          <label class="oh-consent">
+            <input type="checkbox" id="consent" name="consent" value="Yes" required>
+            <span>I agree that Elizabeth Vijan (Tackett Team, eXp Realty) may contact me by phone, text or email about this home and other real estate services. Message and data rates may apply. Reply STOP to opt out of texts at any time.</span>
+          </label>
+          <button type="submit" class="oh-next" id="oh-submit">Sign In</button>
+          <p class="oh-error" role="alert"></p>
+        </section>
+
+        <section class="oh-step" data-step="thanks" hidden aria-live="polite">
+          <div class="oh-check" aria-hidden="true">&#10003;</div>
+          <h2 id="oh-thanks-title">Thank you!</h2>
+          <p class="oh-sub">Enjoy the tour. Elizabeth will follow up with anything you need.</p>
+          <p class="oh-count" id="oh-count"></p>
+          <button type="button" class="oh-ghost" id="oh-next-guest">Next guest</button>
+        </section>
       </form>
-    </section>
+    </div>
+  </main>
 
-    <section id="oh-thanks-view" class="oh-thanks" hidden aria-live="polite">
-      <div class="oh-check" aria-hidden="true">&#10003;</div>
-      <h2 id="oh-thanks-title">Thank you!</h2>
-      <p>Enjoy the tour. Elizabeth will follow up with any details you need.</p>
-      <p class="oh-count" id="oh-count"></p>
-    </section>
-  </div>
-
-  <p class="oh-foot">Elizabeth Vijan &middot; Tackett Team, eXp Realty &middot; <a href="tel:16028857752">602-885-7752</a><br>Equal Housing Opportunity</p>
-</main>
+  <p class="oh-foot">Elizabeth Vijan &middot; Tackett Team, eXp Realty &middot; <a href="tel:16028857752">602-885-7752</a> &middot; Equal Housing Opportunity</p>
+</div>
 
 <script>
 (function () {
   'use strict';
   // ---- Configuration -------------------------------------------------------
-  // Web3Forms access key for elizabeth.vijan3@followupboss.me (public by design).
-  // Leave empty until activated; sign-ins are then saved on this device and sent
-  // automatically once a key is added and the page is reloaded.
   var WEB3FORMS_ACCESS_KEY = '1ff039fc-a910-440b-8d4e-3c4bc914680b';
   var ENDPOINT = 'https://api.web3forms.com/submit';
   var LEAD_SOURCE = 'Open House';
   var RESET_SECONDS = 6;
+  var IDLE_RESET_SECONDS = 90;           // abandoned mid-flow -> back to start
   var QUEUE_KEY = 'ev_open_house_queue_v1';
+  var HOST_KEY = 'ev_open_house_host_v1';
+  var GUEST_STEPS = ['agent', 'timeline', 'email', 'name', 'phone'];
 
-  var form = document.getElementById('oh-form');
-  var formView = document.getElementById('oh-form-view');
-  var thanksView = document.getElementById('oh-thanks-view');
-  var errorEl = document.getElementById('oh-error');
-  var submitBtn = document.getElementById('oh-submit');
-  var propInput = document.getElementById('property');
-  var countEl = document.getElementById('oh-count');
-  var titleEl = document.getElementById('oh-thanks-title');
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var form = $('#oh-form');
+  var hostSection = $('#step-host');
+  var hostForm = $('#host-form');
+  var progressWrap = $('#oh-progress-wrap');
+  var progress = $('#oh-progress');
+  var answers = {};
+  var current = null;
 
-  // ---- ?property= prefill (per-house QR links) ----------------------------
-  var params = new URLSearchParams(window.location.search);
-  var presetProperty = (params.get('property') || '').trim().slice(0, 200);
-  function applyProperty() {
-    if (presetProperty) {
-      propInput.value = presetProperty;
-      document.getElementById('oh-property-line').textContent = 'Welcome to ' + presetProperty + '. Please sign in below.';
-      document.title = 'Open House Sign-In | ' + presetProperty;
+  // ---- Host (listing) setup: localStorage + ?property= / ?mls= ------------
+  function readHost() { try { return JSON.parse(localStorage.getItem(HOST_KEY)) || null; } catch (e) { return null; } }
+  function writeHost(h) { try { if (h) localStorage.setItem(HOST_KEY, JSON.stringify(h)); else localStorage.removeItem(HOST_KEY); } catch (e) {} }
+  var params = new URLSearchParams(location.search);
+  var urlProperty = (params.get('property') || '').trim().slice(0, 200);
+  var urlMls = (params.get('mls') || '').trim().slice(0, 40);
+  var host = readHost();
+  if (urlProperty) {               // per-house QR link: start straight away
+    host = { property: urlProperty, mls: urlMls || (host && host.property === urlProperty ? host.mls : ''), started: new Date().toISOString() };
+    writeHost(host);
+  } else if (urlMls && host) { host.mls = urlMls; writeHost(host); }
+
+  function applyHostText() {
+    var line = $('[data-property-line]');
+    if (host && host.property) {
+      line.textContent = 'Welcome to ' + host.property + '. Please sign in to tour the home.';
+      document.title = 'Open House Sign-In | ' + host.property;
     }
   }
-  applyProperty();
 
-  // ---- Follow Up Boss "Advanced" email-parser body -------------------------
-  // FUB requires every label to be present (blank if unused) and
-  // "New lead activity notification" at the top of the body.
+  function showHost() {
+    stopTimers();
+    $$('.oh-step', form).forEach(function (s) { s.hidden = true; });
+    hostSection.hidden = false; progressWrap.hidden = true; current = 'host';
+    $('#host_property').value = (host && host.property) || urlProperty || '';
+    $('#host_mls').value = (host && host.mls) || urlMls || '';
+    $('#host-end').hidden = !host; $('#host-cancel').hidden = !host;
+    $('#host-error').textContent = '';
+    var q = readQueue().length;
+    $('#host-status').textContent = (host ? 'Active: ' + host.property + (host.mls ? ' (MLS ' + host.mls + ')' : '') + '. ' : '') + (q ? q + ' sign-in(s) waiting to send.' : '');
+    setTimeout(function () { $('#host_property').focus(); }, 50);
+  }
+  hostForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var p = $('#host_property').value.trim(), m = $('#host_mls').value.trim();
+    if (!p) { $('#host-error').textContent = 'Please enter the property address.'; $('#host_property').focus(); return; }
+    host = { property: p.slice(0, 200), mls: m.slice(0, 40), started: new Date().toISOString() };
+    writeHost(host); hostSection.hidden = true; startGuest();
+  });
+  $('#host-end').addEventListener('click', function () {
+    if (!window.confirm('End this open house and clear the address and MLS number from this device?')) return;
+    host = null; writeHost(null);
+    if (location.search) history.replaceState(null, '', location.pathname);
+    urlProperty = ''; urlMls = '';
+    showHost();
+    $('#host-status').textContent = 'Open house ended. Enter the next listing to start again.';
+  });
+  $('#host-cancel').addEventListener('click', function () { hostSection.hidden = true; startGuest(); });
+
+  // Hidden access: gear button, or long-press the logo for 1.5 s.
+  $('#oh-gear').addEventListener('click', showHost);
+  var lp = null, logo = $('#oh-logo');
+  function lpStart() { lp = setTimeout(showHost, 1500); }
+  function lpEnd() { clearTimeout(lp); }
+  ['touchstart', 'mousedown'].forEach(function (ev) { logo.addEventListener(ev, lpStart, { passive: true }); });
+  ['touchend', 'touchcancel', 'mouseup', 'mouseleave'].forEach(function (ev) { logo.addEventListener(ev, lpEnd); });
+  logo.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+
+  // ---- Guest flow ----------------------------------------------------------
+  function show(step) {
+    $$('.oh-step', form).forEach(function (s) { s.hidden = s.getAttribute('data-step') !== step; });
+    current = step;
+    var i = GUEST_STEPS.indexOf(step);
+    progressWrap.hidden = false;
+    progress.style.width = (step === 'thanks' ? 100 : Math.max(8, (i / GUEST_STEPS.length) * 100)) + '%';
+    var sec = $('[data-step="' + step + '"]', form);
+    var first = sec && sec.querySelector('input:not([type=checkbox]), .oh-choice');
+    if (first && first.tagName === 'INPUT') setTimeout(function () { first.focus(); }, 60);
+    bumpIdle();
+  }
+  function startGuest() {
+    form.reset(); answers = {};
+    $$('.oh-choice', form).forEach(function (b) { b.classList.remove('is-selected'); b.setAttribute('aria-pressed', 'false'); });
+    $$('.oh-error', form).forEach(function (e) { e.textContent = ''; });
+    $$('[aria-invalid]', form).forEach(function (e) { e.removeAttribute('aria-invalid'); });
+    $('#note-wrap').hidden = true; $('#note-toggle').hidden = false;
+    $('#oh-submit').disabled = false; $('#oh-submit').textContent = 'Sign In';
+    applyHostText();
+    show('agent');
+    window.scrollTo(0, 0);
+  }
+  function next() { var i = GUEST_STEPS.indexOf(current); if (i > -1 && i < GUEST_STEPS.length - 1) show(GUEST_STEPS[i + 1]); }
+  function back() { var i = GUEST_STEPS.indexOf(current); if (i > 0) show(GUEST_STEPS[i - 1]); }
+
+  $$('.oh-choice', form).forEach(function (b) {
+    b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('click', function () {
+      var f = b.getAttribute('data-field');
+      answers[f] = b.getAttribute('data-value');
+      $$('.oh-choice[data-field="' + f + '"]', form).forEach(function (x) { x.classList.toggle('is-selected', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      setTimeout(next, 220);   // auto-advance
+    });
+  });
+  $$('[data-back]', form).forEach(function (b) { b.addEventListener('click', back); });
+
+  function validateStep(step) {
+    var sec = $('[data-step="' + step + '"]', form), err = sec.querySelector('.oh-error');
+    var bad = null;
+    $$('input[required]', sec).forEach(function (inp) {
+      var ok = inp.type === 'checkbox' ? inp.checked : inp.value.trim() !== '' && inp.checkValidity();
+      if (inp.id === 'phone' && ok) ok = inp.value.replace(/\D/g, '').length >= 10;
+      if (inp.type !== 'checkbox') inp.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      if (!ok && !bad) bad = inp;
+    });
+    if (bad) {
+      err.textContent = bad.id === 'email' ? 'Please enter a valid email.' : bad.id === 'phone' ? 'Please enter a 10-digit phone number.' : bad.id === 'consent' ? 'Please check the box to sign in.' : 'Please fill this in.';
+      bad.focus(); return false;
+    }
+    err.textContent = ''; return true;
+  }
+  $$('[data-next]', form).forEach(function (b) { b.addEventListener('click', function () { if (validateStep(current)) next(); }); });
+  form.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && e.target.tagName === 'INPUT' && current !== 'phone') {
+      e.preventDefault();
+      if (e.target.id === 'first_name') { $('#last_name').focus(); return; }
+      if (validateStep(current)) next();
+    }
+  });
+  $('#note-toggle').addEventListener('click', function () { $('#note-wrap').hidden = false; this.hidden = true; $('#notes').focus(); });
+
+  // ---- Follow Up Boss "Advanced" email-parser body (unchanged format) ------
   function fubBody(d) {
     var notes = [
       'Open house sign-in' + (d.property ? ' at ' + d.property : ''),
+      'MLS #: ' + (d.mls || 'n/a'),
       'Working with an agent: ' + d.has_agent,
       'Timeline: ' + d.timeline,
       'Contact consent: ' + (d.consent ? 'Yes' : 'No') + ' (' + d.submitted_at + ')'
@@ -205,7 +379,8 @@
       'Description: Open house sign-in' + (d.property ? ' at ' + d.property : ''), '',
       'Background: ', '',
       'Property Street: ' + (d.property || ''),
-      'Property City: ', 'Property State: ', 'Property Postal Code: ', 'Property MLS Number: ',
+      'Property City: ', 'Property State: ', 'Property Postal Code: ',
+      'Property MLS Number: ' + (d.mls || ''),
       'Property Price: ', 'Property URL: ', 'Property Type: ', 'Property Bedrooms: ',
       'Property Bathrooms: ', 'Property Area: ', 'Property Lot: ', '',
       'Address Street: ', 'Address City: ', 'Address State: ', 'Address Postal Code: ', '',
@@ -214,19 +389,17 @@
     ];
     return L.join('\n');
   }
-
   function payload(d) {
     return {
       access_key: WEB3FORMS_ACCESS_KEY,
       subject: 'Open House Sign-In: ' + d.first_name + ' ' + d.last_name + (d.property ? ' - ' + d.property : ''),
       from_name: 'Open House Sign-In',
       replyto: d.email,
-      // The only content field, so the email body is the FUB parser block.
       message: fubBody(d)
     };
   }
 
-  // ---- Offline / not-yet-configured queue ---------------------------------
+  // ---- Offline queue -------------------------------------------------------
   function readQueue() { try { return JSON.parse(localStorage.getItem(QUEUE_KEY)) || []; } catch (e) { return []; } }
   function writeQueue(q) { try { localStorage.setItem(QUEUE_KEY, JSON.stringify(q)); } catch (e) {} }
   function send(d) {
@@ -240,66 +413,61 @@
   function flushQueue() {
     var q = readQueue();
     if (!q.length || !WEB3FORMS_ACCESS_KEY || !navigator.onLine) return;
-    var item = q[0];
-    send(item).then(function () { writeQueue(readQueue().slice(1)); flushQueue(); }).catch(function () {});
+    send(q[0]).then(function () { writeQueue(readQueue().slice(1)); flushQueue(); }).catch(function () {});
   }
   window.addEventListener('online', flushQueue);
   flushQueue();
 
-  // ---- Submit / kiosk reset ----------------------------------------------
-  var resetTimer = null;
+  // ---- Submit / kiosk reset -----------------------------------------------
+  var resetTimer = null, idleTimer = null;
+  function stopTimers() { clearInterval(resetTimer); clearTimeout(idleTimer); }
+  function bumpIdle() {
+    clearTimeout(idleTimer);
+    if (current && current !== 'agent' && current !== 'thanks' && current !== 'host') idleTimer = setTimeout(startGuest, IDLE_RESET_SECONDS * 1000);
+  }
+  ['input', 'click', 'touchstart', 'keydown'].forEach(function (ev) { document.addEventListener(ev, bumpIdle, { passive: true }); });
+
   function showThanks(firstName) {
-    titleEl.textContent = firstName ? 'Thank you, ' + firstName + '!' : 'Thank you!';
-    formView.hidden = true; thanksView.hidden = false;
-    var left = RESET_SECONDS;
-    countEl.textContent = 'Ready for the next guest in ' + left + '…';
+    $('#oh-thanks-title').textContent = firstName ? 'Thank you, ' + firstName + '!' : 'Thank you!';
+    show('thanks');
+    var left = RESET_SECONDS, count = $('#oh-count');
+    count.textContent = 'Ready for the next guest in ' + left + '…';
     clearInterval(resetTimer);
     resetTimer = setInterval(function () {
       left -= 1;
-      if (left <= 0) { clearInterval(resetTimer); resetForm(); return; }
-      countEl.textContent = 'Ready for the next guest in ' + left + '…';
+      if (left <= 0) { clearInterval(resetTimer); startGuest(); return; }
+      count.textContent = 'Ready for the next guest in ' + left + '…';
     }, 1000);
   }
-  function resetForm() {
-    form.reset(); applyProperty(); errorEl.textContent = '';
-    submitBtn.disabled = false; submitBtn.textContent = 'Sign In';
-    thanksView.hidden = true; formView.hidden = false;
-    window.scrollTo(0, 0);
-  }
-  thanksView.addEventListener('click', function () { clearInterval(resetTimer); resetForm(); });
+  $('#oh-next-guest').addEventListener('click', function () { clearInterval(resetTimer); startGuest(); });
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    errorEl.textContent = '';
-    if (form.oh_website.value) { showThanks(''); return; } // bot
-    if (!form.checkValidity()) {
-      var bad = form.querySelector(':invalid');
-      errorEl.textContent = bad && bad.id === 'consent' ? 'Please check the consent box to sign in.' : 'Please complete the highlighted fields.';
-      if (bad) bad.focus();
-      return;
-    }
+    if (current !== 'phone') return;
+    if (form.oh_website.value) { showThanks(''); return; }  // bot
+    if (!validateStep('phone')) return;
     var fd = new FormData(form);
     var d = {
       first_name: (fd.get('first_name') || '').trim(),
       last_name: (fd.get('last_name') || '').trim(),
       email: (fd.get('email') || '').trim(),
       phone: (fd.get('phone') || '').trim(),
-      property: (fd.get('property') || '').trim(),
-      has_agent: fd.get('has_agent') || '',
-      timeline: fd.get('timeline') || '',
+      property: (host && host.property) || '',
+      mls: (host && host.mls) || '',
+      has_agent: answers.has_agent || '',
+      timeline: answers.timeline || '',
       notes: (fd.get('notes') || '').trim().replace(/\s*\n\s*/g, ' '),
       consent: fd.get('consent') === 'Yes',
       submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/Phoenix' }) + ' AZ',
       page_url: location.origin + location.pathname
     };
-    submitBtn.disabled = true; submitBtn.textContent = 'Signing in…';
+    var btn = $('#oh-submit'); btn.disabled = true; btn.textContent = 'Signing in…';
     send(d).then(function () { showThanks(d.first_name); })
-      .catch(function () {
-        // Never lose a guest: keep it on this device and retry later.
-        var q = readQueue(); q.push(d); writeQueue(q);
-        showThanks(d.first_name);
-      });
+      .catch(function () { var q = readQueue(); q.push(d); writeQueue(q); showThanks(d.first_name); });
   });
+
+  // ---- Start ---------------------------------------------------------------
+  if (host && host.property) startGuest(); else showHost();
 })();
 </script>
 </body>
