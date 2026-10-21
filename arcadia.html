@@ -11,6 +11,61 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://elizabethvijan.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Arcadia Real Estate Guide",
+          "item": "https://elizabethvijan.com/arcadia.html"
+        }
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://elizabethvijan.com/arcadia.html#webpage",
+      "url": "https://elizabethvijan.com/arcadia.html",
+      "about": {
+        "@id": "https://elizabethvijan.com/arcadia.html#place"
+      },
+      "author": {
+        "@id": "https://elizabethvijan.com/#agent"
+      }
+    },
+    {
+      "@type": "Place",
+      "@id": "https://elizabethvijan.com/arcadia.html#place",
+      "name": "Arcadia, Phoenix, AZ",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Phoenix",
+        "addressRegion": "AZ",
+        "addressCountry": "US"
+      }
+    },
+    {
+      "@type": "RealEstateAgent",
+      "@id": "https://elizabethvijan.com/#agent",
+      "name": "Elizabeth Vijan",
+      "url": "https://elizabethvijan.com/",
+      "areaServed": {
+        "@id": "https://elizabethvijan.com/arcadia.html#place"
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
     {
