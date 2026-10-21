@@ -71,7 +71,8 @@
     <div>
       <span class="eyebrow">Send a Message</span>
       <h2>Tell Elizabeth About Your Goals</h2>
-      <form class="form-grid" action="mailto:elizabeth.vijan@gmail.com" method="post" enctype="text/plain">
+      <form class="form-grid" id="contact-form" action="https://api.web3forms.com/submit" method="post" novalidate>
+        <div class="cf-hp" aria-hidden="true" style="position:absolute!important;left:-9999px!important;width:1px;height:1px;overflow:hidden;"><label for="cf_website">Website</label><input type="text" id="cf_website" name="cf_website" tabindex="-1" autocomplete="off"></div>
         <div>
           <label for="first-name">First Name</label>
           <input type="text" id="first-name" name="first_name" required>
@@ -102,10 +103,10 @@
           <textarea id="message" name="message" placeholder="Tell me a bit about what you're looking for..."></textarea>
         </div>
         <div class="full">
-          <button type="submit" class="btn btn-primary">Send Message</button>
+          <button type="submit" class="btn btn-primary" id="cf-submit">Send Message</button>
         </div>
+        <div class="full" id="cf-status" role="status" aria-live="polite" style="display:none;padding:0.85rem 1rem;border-radius:4px;font-size:0.95rem;"></div>
       </form>
-      <p style="font-size:0.8rem;color:#8a877e;margin-top:0.75rem;">Note: this form opens your email client. To connect it to a live inbox without leaving the page, swap the form's <code>action</code> for a form-handling service such as Formspree or Netlify Forms.</p>
     </div>
     <div>
       <span class="eyebrow">Direct Contact</span>
@@ -202,5 +203,78 @@
 </footer>
 
 <script src="js/main.js"></script>
+<script>
+(function () {
+  var WEB3FORMS_ACCESS_KEY = '1ff039fc-a910-440b-8d4e-3c4bc914680b';
+  var ENDPOINT = 'https://api.web3forms.com/submit';
+  var LEAD_SOURCE = 'elizabethvijan.com Contact Form';
+  var form = document.getElementById('contact-form');
+  if (!form) return;
+  var btn = document.getElementById('cf-submit');
+  var status = document.getElementById('cf-status');
+  function v(n) { var el = form.elements[n]; return el ? String(el.value || '').trim() : ''; }
+  function show(ok, msg) {
+    status.style.display = 'block';
+    status.style.background = ok ? '#f3efe2' : '#fbeaea';
+    status.style.border = '1px solid ' + (ok ? '#d8cba7' : '#e2b4b4');
+    status.style.color = ok ? '#2b2822' : '#8a2a2a';
+    status.textContent = msg;
+  }
+  // Follow Up Boss "Advanced" email-parser body (same format as open-house.html)
+  function fubBody(d) {
+    var notes = ['Website contact form', 'Interested in: ' + d.interest];
+    if (d.message) notes.push('Message: ' + d.message);
+    var L = [
+      'New lead activity notification', '',
+      'First Name: ' + d.first_name,
+      'Last Name: ' + d.last_name,
+      'Email: ' + d.email,
+      'Phone: ' + d.phone, '',
+      'Source: ' + LEAD_SOURCE,
+      'Source URL: ' + d.page_url,
+      'Contacted: ',
+      'Event Type: General Inquiry',
+      'Lead Type: ',
+      'Lead Stage: ',
+      'Tags: Website Contact Form',
+      'Message: ' + (d.message || ''),
+      'Description: Website contact form - ' + d.interest, '',
+      'Background: ', '',
+      'Property Street: ', 'Property City: ', 'Property State: ', 'Property Postal Code: ',
+      'Property MLS Number: ', 'Property Price: ', 'Property URL: ', 'Property Type: ', 'Property Bedrooms: ',
+      'Property Bathrooms: ', 'Property Area: ', 'Property Lot: ', '',
+      'Address Street: ', 'Address City: ', 'Address State: ', 'Address Postal Code: ', '',
+      'Campaign Source: ', 'Campaign Medium: ', 'Campaign Term: ', 'Campaign Content: ', 'Campaign Campaign: ', '',
+      'Notes: ' + notes.join(' | ')
+    ];
+    return L.join('\n');
+  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (v('cf_website')) { show(true, 'Thank you! Your message has been sent. Elizabeth will be in touch soon.'); form.reset(); return; }
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    var d = {
+      first_name: v('first_name'), last_name: v('last_name'), email: v('email'), phone: v('phone'),
+      interest: v('interest'), message: v('message'), page_url: location.href
+    };
+    btn.disabled = true; var label = btn.textContent; btn.textContent = 'Sending...';
+    status.style.display = 'none';
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: 'Website Contact: ' + d.first_name + ' ' + d.last_name + ' - ' + d.interest,
+        from_name: 'elizabethvijan.com Contact Form',
+        replyto: d.email || undefined,
+        message: fubBody(d)
+      })
+    }).then(function (r) { return r.json().then(function (j) { if (!r.ok || !j.success) throw new Error(j.message || 'send failed'); return j; }); })
+      .then(function () { show(true, 'Thank you, ' + d.first_name + '! Your message has been sent. Elizabeth will be in touch soon.'); form.reset(); })
+      .catch(function () { show(false, 'Sorry, your message could not be sent. Please try again, or call 602-885-7752 or email elizabeth@elizabethvijan.com.'); })
+      .then(function () { btn.disabled = false; btn.textContent = label; });
+  });
+})();
+</script>
 </body>
 </html>
