@@ -11,7 +11,8 @@
 <style>
 .home-grid { grid-template-columns: repeat(3, 1fr); }
 .home-card { overflow: hidden; display: flex; flex-direction: column; }
-.home-photo { width: 100%; aspect-ratio: 3/2; object-fit: cover; display: block; }
+.home-card [hidden] { display: none !important; }
+.home-photo { width: 100%; height: auto; aspect-ratio: 3/2; object-fit: cover; display: block; }
 .home-body { padding: 1.25rem 1.5rem 1.5rem; display: flex; flex-direction: column; flex: 1; }
 .home-body h3 { margin: 0.3rem 0 0.4rem; }
 .home-specs { color: var(--color-charcoal-70); margin-bottom: 1rem; }
