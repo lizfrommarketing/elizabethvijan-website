@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homes Featured by Elizabeth Vijan | Scottsdale &amp; Phoenix Home Tours</title>
+<meta name="description" content="Tour the Scottsdale, Paradise Valley and Phoenix homes Elizabeth Vijan has featured on Instagram, from Optima Camelview condos to Moon Valley and Pueblo Bonito.">
+<link rel="canonical" href="https://elizabethvijan.com/homes/">
+<link rel="icon" href="../assets/images/exp-realty-logo.png">
+<link rel="stylesheet" href="../css/styles.css">
+<style>
+.home-grid { grid-template-columns: repeat(3, 1fr); }
+.home-card { overflow: hidden; display: flex; flex-direction: column; }
+.home-card [hidden] { display: none !important; }
+.home-photo { width: 100%; height: auto; aspect-ratio: 3/2; object-fit: cover; display: block; }
+.home-body { padding: 1.25rem 1.5rem 1.5rem; display: flex; flex-direction: column; flex: 1; }
+.home-body h3 { margin: 0.3rem 0 0.4rem; }
+.home-specs { color: var(--color-charcoal-70); margin-bottom: 1rem; }
+.home-actions { margin-top: auto; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.home-link { color: var(--color-gold-dark); text-decoration: underline; font-size: 0.92rem; }
+.homes-cta .btn { margin: 0.3rem; }
+.homes-cta p a { color: inherit; text-decoration: underline; }
+@media (max-width: 960px) { .home-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .home-grid { grid-template-columns: 1fr; } }
+.home-unlock { width: 100%; margin-bottom: 0.75rem; background: transparent; border: 1px solid var(--color-gold-dark, #a9843f); color: var(--color-gold-dark, #a9843f); cursor: pointer; }
+.home-locked { margin-bottom: 0.75rem; }
+.home-agent { font-size: 0.75rem; color: #666; margin: 0 0 0.4rem; }
+.home-price { font-family: var(--font-serif, serif); font-size: 1.5rem; margin: 0 0 0.25rem; color: var(--color-black, #111); }
+.lead-modal[hidden] { display: none; }
+.lead-modal { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; padding: 1rem; }
+.lead-box { background: #fff; max-width: 440px; width: 100%; padding: 2rem; position: relative; max-height: 92vh; overflow: auto; }
+.lead-box h3 { margin: 0.2rem 0 0.4rem; }
+.lead-box label { display: block; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; margin: 0.8rem 0 0.25rem; }
+.lead-box input { width: 100%; padding: 0.7rem; border: 1px solid #ccc; font: inherit; box-sizing: border-box; }
+.lead-box .btn { width: 100%; margin-top: 1.2rem; }
+.lead-close { position: absolute; top: 0.6rem; right: 0.9rem; background: none; border: 0; font-size: 1.6rem; cursor: pointer; }
+.lead-hp { position: absolute; left: -9999px; }
+.lead-err { color: #b00020; font-size: 0.88rem; min-height: 1.2em; margin: 0.6rem 0 0; }
+.lead-fine { font-size: 0.75rem; color: #666; margin-top: 0.8rem; }
+</style>
+<script data-goatcounter="https://elizabethvijan.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-wrap">
+    <a href="../index.html" class="logo-link"><img src="../assets/images/tackett-logo-black-540.webp" alt="Tackett Team, powered by eXp Realty" width="540" height="128"></a>
+    <nav class="nav-links" id="nav-links">
+      <a href="../index.html">Home</a>
+      <div class="has-dropdown">
+        <span>Communities</span>
+        <div class="dropdown-menu">
+          <a href="../scottsdale.html">Scottsdale</a>
+          <a href="../arcadia.html">Arcadia</a>
+          <a href="../arcadia-lite.html">Arcadia Lite</a>
+          <a href="../central-phoenix.html">Central Phoenix</a>
+          <a href="https://chaparralparkhomes.com/">Chaparral Park Homes</a>
+        </div>
+      </div>
+      <a href="../about.html">About</a>
+      <a href="../blog/index.html">Blog</a>
+      <a href="../contact.html" class="nav-cta">Contact</a>
+    </nav>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<section class="hero page-hero">
+  <img class="hero-bg" src="../assets/images/photos/desert-sunset-valley-1200.webp" width="1200" height="800" alt="Arizona desert valley at sunset" fetchpriority="high" decoding="async">
+  <div class="container hero-content">
+    <div class="breadcrumb"><a href="../index.html">Home</a> / Homes</div>
+    <span class="eyebrow">Featured Homes</span>
+    <h1>Homes I've Toured on Instagram</h1>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="grid home-grid">
+      <article class="card home-card" data-address="7161 E Rancho Vista Dr #4007" data-city="Scottsdale" data-zip="85251" data-mls="6929368">
+        <img class="home-photo" src="../assets/images/homes/7161-e-rancho-vista-dr-4007.jpg" width="1200" height="800" alt="7161 E Rancho Vista Dr #4007" loading="lazy" decoding="async">
+        <div class="home-body">
+          <span class="eyebrow">Optima Camelview · Old Town Scottsdale</span>
+          <h3>7161 E Rancho Vista Dr #4007</h3>
+          <p class="home-specs">2 bd · 2 ba · 1,549 sq ft</p>
+          <div class="home-locked" hidden>
+            <p class="home-price">$975,000</p>
+            <p class="home-agent">Listed by Colleen Olson &amp; Connor Olson, Arizona Best Real Estate</p>
+            <a href="https://www.flexmls.com/share/ElBAW/7161-E-RANCHO-VISTA-DR-4007-Scottsdale-AZ-85251" target="_blank" rel="noopener" class="home-link">View listing (MLS# 6929368)</a>
+          </div>
+          <button type="button" class="btn btn-outline home-unlock">Get price &amp; details</button>
+          <div class="home-actions">
+            <a href="https://www.instagram.com/reel/Deu11Q2h9tt/" target="_blank" rel="noopener" class="btn btn-primary">Watch the tour</a>
+          </div>
+        </div>
+      </article>
+      <article class="card home-card" data-address="7127 E Rancho Vista Dr #2003" data-city="Scottsdale" data-zip="85251" data-mls="6935332">
+        <img class="home-photo" src="../assets/images/homes/7127-e-rancho-vista-dr-2003.jpg" width="1200" height="800" alt="7127 E Rancho Vista Dr #2003" loading="lazy" decoding="async">
+        <div class="home-body">
+          <span class="eyebrow">Optima Camelview · Old Town Scottsdale</span>
+          <h3>7127 E Rancho Vista Dr #2003</h3>
+          <p class="home-specs">2 bd · 2 ba · 1,340 sq ft</p>
+          <div class="home-locked" hidden>
+            <p class="home-price">$715,000</p>
+            <p class="home-agent">Listed by Darren Tackett, eXp Realty</p>
+            <a href="https://www.flexmls.com/share/ElAXK/7127-E-RANCHO-VISTA-DR-2003-Scottsdale-AZ-85251" target="_blank" rel="noopener" class="home-link">View listing (MLS# 6935332)</a>
+          </div>
+          <button type="button" class="btn btn-outline home-unlock">Get price &amp; details</button>
+          <div class="home-actions">
+            <a href="https://www.instagram.com/reel/DexaCRexypl/" target="_blank" rel="noopener" class="btn btn-primary">Watch the tour</a>
+          </div>
+        </div>
+      </article>
+      <article class="card home-card" data-address="7127 E Rancho Vista Dr #3009" data-city="Scottsdale" data-zip="85251" data-mls="7048466">
+        <img class="home-photo" src="../assets/images/homes/7127-e-rancho-vista-dr-3009.jpg" width="1200" height="801" alt="7127 E Rancho Vista Dr #3009" loading="lazy" decoding="async">
+        <div class="home-body">
+          <span class="eyebrow">Optima Camelview · Old Town Scottsdale</span>
+          <h3>7127 E Rancho Vista Dr #3009</h3>
+          <p class="home-specs">2 bd · 2 ba · 1,200 sq ft</p>
+          <div class="home-locked" hidden>
+            <p class="home-price">$525,000</p>
+            <p class="home-agent">Listed by Heather M Mahmood-Corley, Redfin Corporation</p>
+            <a href="https://www.flexmls.com/share/ElBBE/7127-E-RANCHO-VISTA-DR-3009-Scottsdale-AZ-85251" target="_blank" rel="noopener" class="home-link">View listing (MLS# 7048466)</a>
+          </div>
+          <button type="button" class="btn btn-outline home-unlock">Get price &amp; details</button>
+          <div class="home-actions">
+            <a href="https://www.instagram.com/reel/DexdihgRxv5/" target="_blank" rel="noopener" class="btn btn-primary">Watch the tour</a>
+            
+          </div>
+        </div>
+      </article>
+      <article class="card home-card" data-address="12222 E Arabian Park Dr" data-city="Scottsdale" data-zip="85259" data-mls="7081781">
+        <img class="home-photo" src="../assets/images/homes/12222-e-arabian-park-dr.jpg" width="1200" height="800" alt="12222 E Arabian Park Dr" loading="lazy" decoding="async">
+        <div class="home-body">
+          <span class="eyebrow">Pueblo Bonito · Scottsdale</span>
+          <h3>12222 E Arabian Park Dr</h3>
+          <p class="home-specs">6 bd · 7 ba · 6,418 sq ft</p>
+          <div class="home-locked" hidden>
+            <p class="home-price">$2,650,000</p>
+            <p class="home-agent">Listed by David Arustamian, Russ Lyon Sotheby's International Realty</p>
+            <a href="https://www.flexmls.com/share/ElBAP/12222-E-Arabian-Park-DR-Scottsdale-AZ-85259" target="_blank" rel="noopener" class="home-link">View listing (MLS# 7081781)</a>
+          </div>
+          <button type="button" class="btn btn-outline home-unlock">Get price &amp; details</button>
+          <div class="home-actions">
+            <a href="https://www.instagram.com/reel/DexXpUtxpNn/" target="_blank" rel="noopener" class="btn btn-primary">Watch the tour</a>
+            
+          </div>
+        </div>
+      </article>
+      <article class="card home-card" data-address="6621 E Doubletree Ranch Rd" data-city="Paradise Valley" data-zip="85253" data-mls="7006972">
+        <img class="home-photo" src="../assets/images/homes/6621-e-doubletree-ranch-rd.jpg" width="1200" height="800" alt="6621 E Doubletree Ranch Rd" loading="lazy" decoding="async">
+        <div class="home-body">
+          <span class="eyebrow">Paradise Valley</span>
+          <h3>6621 E Doubletree Ranch Rd</h3>
+          <p class="home-specs">6 bd · 8 ba · 6,216 sq ft</p>
+          <div class="home-locked" hidden>
+            <p class="home-price">$5,995,000</p>
+            <p class="home-agent">Listed by Charlotte Henderson, Thomas James Homes</p>
+            <a href="https://www.flexmls.com/share/ElB9N/6621-E-Doubletree-Ranch-RD-Paradise-Valley-AZ-85253" target="_blank" rel="noopener" class="home-link">View listing (MLS# 7006972)</a>
+          </div>
+          <button type="button" class="btn btn-outline home-unlock">Get price &amp; details</button>
+          <div class="home-actions">
+          </div>
+        </div>
+      </article>
+      <article class="card home-card" data-address="8565 E Krail St" data-city="Scottsdale" data-zip="85250" data-mls="7089908">
+        <img class="home-photo" src="../assets/images/homes/8565-e-krail-st.jpg" width="1200" height="800" alt="8565 E Krail St" loading="lazy" decoding="async">
+        <div class="home-body">
+          <span class="eyebrow">Scottsdale (85250)</span>
+          <h3>8565 E Krail St</h3>
+          <p class="home-specs">3 bd · 4 ba · 2,820 sq ft</p>
+          <div class="home-locked" hidden>
+            <p class="home-price">$1,375,000</p>
+            <p class="home-agent">Listed by Karen R Bosch, Coldwell Banker Realty</p>
+            <a href="https://www.flexmls.com/share/ElBAK/8565-E-KRAIL-ST-Scottsdale-AZ-85250" target="_blank" rel="noopener" class="home-link">View listing (MLS# 7089908)</a>
+          </div>
+          <button type="button" class="btn btn-outline home-unlock">Get price &amp; details</button>
+          <div class="home-actions">
+          </div>
+        </div>
+      </article>
+      <article class="card home-card" data-address="1136 E Forest Hills Dr" data-city="Phoenix" data-zip="85022" data-mls="7087108">
+        <img class="home-photo" src="../assets/images/homes/1136-e-forest-hills-dr.jpg" width="1200" height="901" alt="1136 E Forest Hills Dr, Moon Valley, Phoenix" loading="lazy" decoding="async">
+        <div class="home-body">
+          <span class="eyebrow">Moon Valley · Phoenix</span>
+          <h3>1136 E Forest Hills Dr</h3>
+          <p class="home-specs">3 bd · 4 ba · 3,678 sq ft</p>
+          <div class="home-locked" hidden>
+            <p class="home-price">$1,560,000</p>
+            <p class="home-agent">Listed by Kimberly Mazinter, eXp Realty</p>
+            <a href="https://www.zillow.com/homedetails/1136-E-Forest-Hills-Dr-Phoenix-AZ-85022/8008786_zpid/" target="_blank" rel="noopener" class="home-link">View listing (MLS# 7087108)</a>
+            
+          </div>
+          <button type="button" class="btn btn-outline home-unlock">Get price &amp; details</button>
+          <div class="home-actions">
+            <a href="https://www.instagram.com/reel/DeatuynNTvx/" target="_blank" rel="noopener" class="btn btn-primary">Watch the tour</a>
+            
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band homes-cta">
+  <div class="container">
+    <h2>Want to see one in person?</h2>
+    <a href="tel:16028857752" class="btn btn-light">Call 602-885-7752</a>
+    <a href="sms:+16028857752" class="btn btn-light">Text 602-885-7752</a>
+    <p style="margin-top:1.25rem;"><a href="https://www.instagram.com/elizabethvijanrealtor/" target="_blank" rel="noopener">Not the one? Send me a DM to start your search.</a></p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-brand-band">
+    <div class="container footer-brand-inner">
+      <a href="../index.html" class="footer-logo"><img src="../assets/images/tackett-logo-black-540.webp" alt="Tackett Team, powered by eXp Realty" width="540" height="128" loading="lazy" decoding="async"></a>
+      <!-- network-sites:start -->
+    <div class="network-sites">
+      <p class="network-line">Part of the <a href="https://elizabethvijan.com/">Elizabeth Vijan</a> network of local sites</p>
+      <ul class="network-list">
+        <li><span aria-current="true">Elizabeth Vijan: Scottsdale &amp; Phoenix</span></li>
+        <li><a href="https://chaparralparkhomes.com/">Chaparral Park Homes (85250)</a></li>
+      </ul>
+    </div>
+    <!-- network-sites:end -->
+    </div>
+  </div>
+  <div class="container footer-top">
+    <div class="footer-grid">
+      <div>
+        <p style="max-width:280px;color:rgba(255,255,255,0.65);font-size:0.92rem;">Elizabeth Vijan is a residential real estate specialist with the Tackett Team at eXp Realty, serving Scottsdale, Arcadia, and Central Phoenix.</p>
+        <div class="social-row" style="margin-top:1rem;">
+          <a href="https://www.instagram.com/elizabethvijanrealtor/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 1.17.05 1.97.24 2.43.4a4.9 4.9 0 0 1 1.77 1.15 4.9 4.9 0 0 1 1.15 1.77c.16.46.35 1.26.4 2.43.06 1.25.07 1.65.07 4.85s0 3.6-.07 4.85c-.05 1.17-.24 1.97-.4 2.43a4.9 4.9 0 0 1-1.15 1.77 4.9 4.9 0 0 1-1.77 1.15c-.46.16-1.26.35-2.43.4-1.25.06-1.65.07-4.85.07s-3.6 0-4.85-.07c-1.17-.05-1.97-.24-2.43-.4a4.9 4.9 0 0 1-1.77-1.15 4.9 4.9 0 0 1-1.15-1.77c-.16-.46-.35-1.26-.4-2.43C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.85c.05-1.17.24-1.97.4-2.43A4.9 4.9 0 0 1 3.62 3 4.9 4.9 0 0 1 5.4 1.8c.46-.16 1.26-.35 2.43-.4C8.87 1.35 9.27 1.34 12 1.34zM12 4c-3.16 0-3.53 0-4.77.07-1 .04-1.54.21-1.9.35-.48.19-.82.4-1.18.76-.36.36-.57.7-.76 1.18-.14.36-.31.9-.35 1.9C3 9.5 3 9.87 3 13.03s0 3.53.07 4.77c.04 1 .21 1.54.35 1.9.19.48.4.82.76 1.18.36.36.7.57 1.18.76.36.14.9.31 1.9.35C8.24 22.06 8.6 22.06 11.77 22.06h.46c3.16 0 3.53 0 4.77-.07 1-.04 1.54-.21 1.9-.35.48-.19.82-.4 1.18-.76.36-.36.57-.7.76-1.18.14-.36.31-.9.35-1.9.06-1.24.07-1.6.07-4.77s0-3.53-.07-4.77c-.04-1-.21-1.54-.35-1.9a3.1 3.1 0 0 0-.76-1.18 3.1 3.1 0 0 0-1.18-.76c-.36-.14-.9-.31-1.9-.35C15.53 4 15.16 4 12 4z"/><circle cx="12" cy="12" r="3.2"/><circle cx="17.4" cy="6.6" r="1.1"/></svg>
+          </a>
+          <a href="https://www.zillow.com/profile/elizabeth08094" target="_blank" rel="noopener" aria-label="Zillow profile">
+            <svg viewBox="0 0 24 24"><path d="M12 2 3 9v13h6v-7h6v7h6V9z"/></svg>
+          </a>
+          <a href="https://share.google/qajN0V9ugbEEMkuzK" target="_blank" rel="noopener" aria-label="Google Business Profile">
+            <svg viewBox="0 0 24 24"><path d="M12 2C7.6 2 4 5.6 4 10c0 5.4 7 11.4 7.3 11.6a1 1 0 0 0 1.4 0C13 21.4 20 15.4 20 10c0-4.4-3.6-8-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About Elizabeth</a>
+        <a href="../blog/index.html">Blog</a>
+        <a href="../contact.html">Contact</a>
+      </div>
+      <div>
+        <h4>Communities</h4>
+        <a href="../scottsdale.html">Scottsdale</a>
+        <a href="../arcadia.html">Arcadia</a>
+        <a href="../arcadia-lite.html">Arcadia Lite</a>
+        <a href="../central-phoenix.html">Central Phoenix</a>
+        <a href="https://chaparralparkhomes.com/">Chaparral Park Homes</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="tel:16028857752">602-885-7752</a>
+        <a href="mailto:elizabeth@elizabethvijan.com">elizabeth@elizabethvijan.com</a>
+        <a href="https://maps.google.com/?q=20551+N+Pima+Rd+Suite+200,+Scottsdale,+AZ+85255" target="_blank" rel="noopener">20551 N Pima Rd Suite 200<br>Scottsdale, AZ 85255</a>
+      </div>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <div>&copy; <span id="year"></span> Elizabeth Vijan, Tackett Team at eXp Realty. AZ License #SA708105000. All rights reserved.</div>
+    <div class="equal-housing">
+      <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2 2 10h3v10h5v-6h4v6h5V10z3z"/></svg>
+      Equal Housing Opportunity
+    </div>
+  </div>
+</footer>
+
+
+<div class="lead-modal" id="lead-modal" hidden role="dialog" aria-modal="true" aria-labelledby="lead-title">
+  <div class="lead-box">
+    <button type="button" class="lead-close" aria-label="Close">&times;</button>
+    <span class="eyebrow">Price &amp; Details</span>
+    <h3 id="lead-title">Get price &amp; details</h3>
+    <p id="lead-prop" style="margin:0;font-size:0.92rem;"></p>
+    <form id="lead-form" novalidate>
+      <label for="lf-name">Name</label>
+      <input type="text" id="lf-name" name="name" autocomplete="name" required>
+      <label for="lf-email">Email</label>
+      <input type="email" id="lf-email" name="email" autocomplete="email" required>
+      <label for="lf-phone">Phone</label>
+      <input type="tel" id="lf-phone" name="phone" autocomplete="tel" required>
+      <input type="checkbox" name="botcheck" class="lead-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <p class="lead-err" id="lead-err" role="alert"></p>
+      <button type="submit" class="btn btn-primary" id="lead-submit">Show me the price</button>
+      <p class="lead-fine">By submitting, you agree Elizabeth Vijan (Tackett Team, eXp Realty) may contact you by phone, text or email about this and other homes. Reply STOP to opt out of texts.</p>
+    </form>
+  </div>
+</div>
+
+<script>
+(function () {
+  var WEB3FORMS_ACCESS_KEY = '1ff039fc-a910-440b-8d4e-3c4bc914680b';
+  var ENDPOINT = 'https://api.web3forms.com/submit';
+  var LEAD_SOURCE = 'elizabethvijan.com Homes Page';
+  var UNLOCK_KEY = 'ev_homes_unlocked_v1';
+  var modal = document.getElementById('lead-modal'), form = document.getElementById('lead-form');
+  var err = document.getElementById('lead-err'), btn = document.getElementById('lead-submit');
+  var current = null, lastFocus = null;
+
+  function getUnlock() { try { return JSON.parse(localStorage.getItem(UNLOCK_KEY)); } catch (e) { return null; } }
+  function reveal(card) {
+    card.querySelector('.home-locked').hidden = false;
+    var b = card.querySelector('.home-unlock'); if (b) b.hidden = true;
+  }
+  function revealAll() { document.querySelectorAll('.home-card').forEach(reveal); }
+  if (getUnlock()) revealAll();
+
+  function open(card) {
+    current = card; lastFocus = document.activeElement;
+    document.getElementById('lead-prop').textContent = card.dataset.address + (card.dataset.city ? ', ' + card.dataset.city : '');
+    err.textContent = ''; modal.hidden = false;
+    setTimeout(function () { document.getElementById('lf-name').focus(); }, 30);
+  }
+  function close() { modal.hidden = true; if (lastFocus) lastFocus.focus(); }
+  document.querySelectorAll('.home-unlock').forEach(function (b) {
+    b.addEventListener('click', function () { open(b.closest('.home-card')); });
+  });
+  modal.querySelector('.lead-close').addEventListener('click', close);
+  modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) close(); });
+
+  // ---- Follow Up Boss "Advanced" email-parser body (same format as open-house.html) ----
+  function fubBody(d) {
+    var notes = [
+      'Homes page price & details request' + (d.property ? ' for ' + d.property : ''),
+      'MLS #: ' + (d.mls || 'n/a'),
+      'Contact consent: Yes (' + d.submitted_at + ')'
+    ];
+    var L = [
+      'New lead activity notification', '',
+      'First Name: ' + d.first_name,
+      'Last Name: ' + d.last_name,
+      'Email: ' + d.email,
+      'Phone: ' + d.phone, '',
+      'Source: ' + LEAD_SOURCE,
+      'Source URL: ' + d.page_url,
+      'Contacted: ',
+      'Event Type: Property Inquiry',
+      'Lead Type: ',
+      'Lead Stage: ',
+      'Tags: Homes Page',
+      'Message: Requested price & details for ' + (d.property || 'a featured home'),
+      'Description: Property inquiry' + (d.property ? ' for ' + d.property : ''), '',
+      'Background: ', '',
+      'Property Street: ' + (d.property || ''),
+      'Property City: ' + (d.city || ''), 'Property State: AZ', 'Property Postal Code: ' + (d.zip || ''),
+      'Property MLS Number: ' + (d.mls || ''),
+      'Property Price: ', 'Property URL: ', 'Property Type: ', 'Property Bedrooms: ',
+      'Property Bathrooms: ', 'Property Area: ', 'Property Lot: ', '',
+      'Address Street: ', 'Address City: ', 'Address State: ', 'Address Postal Code: ', '',
+      'Campaign Source: ', 'Campaign Medium: ', 'Campaign Term: ', 'Campaign Content: ', 'Campaign Campaign: ', '',
+      'Notes: ' + notes.join(' | ')
+    ];
+    return L.join('\n');
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (form.botcheck.checked) { close(); return; }
+    var name = form.name.value.trim(), email = form.email.value.trim(), phone = form.phone.value.trim();
+    if (!name) { err.textContent = 'Please enter your name.'; form.name.focus(); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'Please enter a valid email.'; form.email.focus(); return; }
+    if (phone.replace(/\D/g, '').length < 10) { err.textContent = 'Please enter a valid phone number.'; form.phone.focus(); return; }
+    var parts = name.split(/\s+/);
+    var c = current.dataset;
+    var d = {
+      first_name: parts.shift(), last_name: parts.join(' '), email: email, phone: phone,
+      property: c.address, city: c.city, zip: c.zip, mls: c.mls,
+      page_url: location.href, submitted_at: new Date().toISOString()
+    };
+    btn.disabled = true; btn.textContent = 'Sending...'; err.textContent = '';
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: 'Homes Page Inquiry: ' + name + ' - ' + c.address,
+        from_name: 'elizabethvijan.com Homes Page',
+        replyto: email,
+        botcheck: '',
+        message: fubBody(d)
+      })
+    }).then(function (r) { return r.json().then(function (j) { if (!r.ok || !j.success) throw new Error(j.message || 'send failed'); }); })
+      .then(function () {
+        try { localStorage.setItem(UNLOCK_KEY, JSON.stringify({ at: d.submitted_at })); } catch (x) {}
+        revealAll(); close(); form.reset();
+      })
+      .catch(function () { err.textContent = 'Sorry, that didn\'t go through. Please try again or call/text 602-885-7752.'; })
+      .then(function () { btn.disabled = false; btn.textContent = 'Show me the price'; });
+  });
+})();
+</script>
+<script src="../js/main.js"></script>
+</body>
+</html>
