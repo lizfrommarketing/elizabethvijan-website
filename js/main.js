@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var dropdownWrap = document.querySelector('.has-dropdown');
   if (dropdownLabel && dropdownWrap) {
     dropdownLabel.addEventListener('click', function () {
-      if (window.innerWidth <= 720) {
+      if (window.innerWidth <= 960) {
         dropdownWrap.classList.toggle('is-open');
       }
     });
