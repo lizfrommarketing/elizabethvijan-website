@@ -676,3 +676,5 @@ section.tiles { padding: 0; }
 @media (prefers-reduced-motion: reduce) {
      .tile img, .area-card .area-media img, .post-card .post-thumb img, .photo-strip img { transition: none; }
 }
+/* Communities dropdown toggle: match the other nav tabs exactly */
+.nav-links .has-dropdown > span, .nav-links .has-dropdown > button { font-family: var(--font-sans); line-height: inherit; }
