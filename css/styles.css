@@ -574,6 +574,32 @@ section.tiles { padding: 0; }
 .tile h3 { color: #fff; font-size: 1.6rem; margin-bottom: 0.4rem; }
 .tile p { color: rgba(255,255,255,0.86); font-size: 0.9rem; margin-bottom: 0.9rem; line-height: 1.6; }
 
+/* ---------- Homepage Scottsdale feature line ---------- */
+.scottsdale-feature {
+     background: var(--ev-black);
+     color: #fff;
+     padding: 1.6rem 0;
+     border-top: 1px solid rgba(177,154,85,0.45);
+     border-bottom: 1px solid rgba(177,154,85,0.45);
+}
+.scottsdale-feature p {
+     margin: 0;
+     font-size: 1.05rem;
+     letter-spacing: 0.02em;
+     color: rgba(255,255,255,0.92);
+}
+.scottsdale-feature a {
+     color: var(--ev-gold-light);
+     border-bottom: 1px solid var(--ev-gold);
+     font-weight: 600;
+     letter-spacing: 0.12em;
+     text-transform: uppercase;
+     font-size: 0.76rem;
+     margin-left: 0.45em;
+}
+.scottsdale-feature a:hover { color: #fff; }
+
+
 /* ---------- Area cards with real photos ---------- */
 .area-card { background: #fff; }
 .area-card .area-media { height: auto; aspect-ratio: 4 / 3; overflow: hidden; background: var(--ev-ink); }
